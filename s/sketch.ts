@@ -1,4 +1,5 @@
 
+import {Fail} from "./expect.js"
 import {chunkify} from "./utils/chunkify.js"
 
 export const meta = Symbol("meta")
@@ -123,6 +124,9 @@ export async function run(suite: Suite) {
 							(typeof reason === "string") ?
 								reason :
 
+							(reason instanceof Fail) ?
+								reason.message :
+
 							(reason instanceof Error) ?
 								`${reason.name}: ${reason.message}` :
 								"test threw unknown type"
@@ -178,24 +182,4 @@ export async function science<S extends Suite>(suite: S) {
 		process.exit(1)
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

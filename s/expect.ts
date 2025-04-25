@@ -3,16 +3,39 @@ export class Fail extends Error {
 	name = this.constructor.name
 }
 
-function grace(condition: boolean, onFail: () => Fail) {
-	if (!condition)
-		throw onFail()
-	return condition
+function trunc(s: string, max = 16) {
+	return s.length > max
+		? `${s.slice(max)}...`
+		: s
+}
+
+function print(x: any) {
+	if (typeof x === "undefined")
+		return "undefined"
+	else if (x === null)
+		return "null"
+	else if (typeof x === "string")
+		return `"${trunc(x)}"`
+	else if (typeof x === "number")
+		return trunc(x.toString())
+	else if (typeof x === "boolean")
+		return x ? "true" : "false"
+	else if (typeof x === "bigint")
+		return trunc(x.toString())
+	else if (typeof x === "symbol")
+		return trunc(x.toString())
+	else if (typeof x === "object")
+		return "obj"
+	else if (typeof x === "function")
+		return "fn"
+	else
+		return "unknown"
 }
 
 const makeAssertions = (a: any) => ({
 	is: (b: any) => a === b,
 	isnt: (b: any) => a !== b,
-	gt: (b: any) => grace(a > b, () => new Fail(`expect(${a}).gt(${b})`)),
+	gt: (b: any) => a > b,
 	gte: (b: any) => a >= b,
 	lt: (b: any) => a < b,
 	lte: (b: any) => a <= b,
@@ -59,23 +82,35 @@ const inverseAssertions = (a: any) => {
 	) as ReturnType<typeof makeAssertions>
 }
 
+function prints(p: any[]) {
+	return p.map(print).join(", ")
+}
+
+function expectmessage(not: boolean, key: string, a: any, b: any[]) {
+	return not
+		? `expect(${print(a)}).not.${key}(${prints(b)})`
+		: `expect(${print(a)}).${key}(${prints(b)})`
+}
+
 function expectancy<A extends Record<string, (...p: any[]) => (boolean | Promise<boolean>)>>(
+		not: boolean,
+		a: any,
 		assertions: A,
 		message?: string,
 	) {
 	return Object.fromEntries(
 		Object.entries(assertions).map(([key, fn]) => {
-			const fn1 = fn as (...p: any[]) => (boolean | Promise<boolean>)
-			const fn2 = (...p: any[]) => {
-				const result = fn1(...p)
+			const fn1 = fn as (...b: any[]) => (boolean | Promise<boolean>)
+			const fn2 = (...b: any[]) => {
+				const result = fn1(...b)
 				if (result instanceof Promise) {
 					return result.then(r => {
-						if (!r) throw new Fail(message ?? `"${key}" expectation failed`)
+						if (!r) throw new Fail(message ?? expectmessage(not, key, a, b))
 						return r
 					})
 				}
 				else {
-					if (!result) throw new Fail(message ?? `"${key}" expectation failed`)
+					if (!result) throw new Fail(message ?? expectmessage(not, key, a, b))
 					return result
 				}
 			}
@@ -84,8 +119,8 @@ function expectancy<A extends Record<string, (...p: any[]) => (boolean | Promise
 	) as A
 }
 
-export const expect = (subject: any, message?: string) => ({
-	...expectancy(makeAssertions(subject), message),
-	not: expectancy(inverseAssertions(subject), message),
+export const expect = (a: any, message?: string) => ({
+	...expectancy(false, a, makeAssertions(a), message),
+	not: expectancy(true, a, inverseAssertions(a), message),
 })
 

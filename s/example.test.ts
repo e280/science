@@ -14,7 +14,7 @@ const steeze = {
 }
 
 export default science({
-	"money issues": tests.skip({
+	"money issues": tests({
 		"i'm not a brokie": test(async() => {
 			expect(steeze.dollars).not.lt(1_000)
 		}),
