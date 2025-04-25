@@ -1,19 +1,25 @@
 
-export class BrokenExpectation extends Error {
+export class Fail extends Error {
 	name = this.constructor.name
+}
+
+function grace(condition: boolean, onFail: () => Fail) {
+	if (!condition)
+		throw onFail()
+	return condition
 }
 
 const makeAssertions = (a: any) => ({
 	is: (b: any) => a === b,
 	isnt: (b: any) => a !== b,
-	greaterThan: (b: any) => a > b,
+	gt: (b: any) => grace(a > b, () => new Fail(`expect(${a}).gt(${b})`)),
 	gte: (b: any) => a >= b,
-	lessThan: (b: any) => a < b,
+	lt: (b: any) => a < b,
 	lte: (b: any) => a <= b,
 	throws: () => {
 		try {
 			if (typeof a !== "function")
-				throw new BrokenExpectation(".throws() requires a function")
+				throw new Fail(".throws() requires a function")
 			a()
 			return false
 		}
@@ -24,10 +30,10 @@ const makeAssertions = (a: any) => ({
 	throwsAsync: async() => {
 		try {
 			if (typeof a !== "function")
-				throw new BrokenExpectation(".throwsAsync() requires an async function")
+				throw new Fail(".throwsAsync() requires an async function")
 			const promise = a()
 			if (!(promise instanceof Promise))
-				throw new BrokenExpectation(".throwsAsync() requires an *async* function")
+				throw new Fail(".throwsAsync() requires an *async* function")
 			await promise
 			return false
 		}
@@ -64,12 +70,12 @@ function expectancy<A extends Record<string, (...p: any[]) => (boolean | Promise
 				const result = fn1(...p)
 				if (result instanceof Promise) {
 					return result.then(r => {
-						if (!r) throw new BrokenExpectation(message ?? `"${key}" expectation failed`)
+						if (!r) throw new Fail(message ?? `"${key}" expectation failed`)
 						return r
 					})
 				}
 				else {
-					if (!result) throw new BrokenExpectation(message ?? `"${key}" expectation failed`)
+					if (!result) throw new Fail(message ?? `"${key}" expectation failed`)
 					return result
 				}
 			}

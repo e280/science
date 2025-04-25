@@ -13,13 +13,14 @@
 	"scripts": {
 		"build": "tsc",
 		"start": "http-server x",
-		"test": "exit 0",
+		"test": "node x/example.test.js",
 		"test-watch": "chokidar 'x/**/*.js' -c 'npm test'"
 	},
 	"dependencies": {
 		"@benev/argv": "^0.3.10"
 	},
 	"devDependencies": {
+		"@types/node": "^22.15.2",
 		"chokidar": "^4.0.3",
 		"chokidar-cli": "^3.0.0",
 		"http-server": "^14.1.1",
