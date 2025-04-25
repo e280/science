@@ -5,7 +5,7 @@ import {science, test} from "./sketch.js"
 const steeze = {
 	dollars: 1_000_001,
 	seaworthyVessels: 2,
-	bitches: 3,
+	bitches: 2,
 }
 
 export default science({
@@ -17,11 +17,11 @@ export default science({
 		expect(steeze.dollars).gte(1_000_000)
 	}),
 
-	"got boats": test.only(async() => {
-		expect(steeze.seaworthyVessels).greaterThan(0)
+	"i've got boats": test.only(async() => {
+		expect(steeze.seaworthyVessels).greaterThan(1)
 	}),
 
-	"got hoes": test.skip(async() => {
+	"i've got hoes": test.skip(async() => {
 		expect(steeze.bitches).greaterThan(1)
 	}),
 })
