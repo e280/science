@@ -16,7 +16,9 @@
 		"test": "exit 0",
 		"test-watch": "chokidar 'x/**/*.js' -c 'npm test'"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"@benev/argv": "^0.3.10"
+	},
 	"devDependencies": {
 		"chokidar": "^4.0.3",
 		"chokidar-cli": "^3.0.0",
