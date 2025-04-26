@@ -1,11 +1,14 @@
 
 import {chunkify} from "./utils.js"
 import {Fail} from "../expect/errors.js"
+import {display} from "../expect/utils.js"
 import {flattenTests} from "./flatten-tests.js"
-import {Suite, Vial, TestReport} from "../types.js"
+import {Tests, Vial, TestReport} from "../types.js"
 
-export async function run(suite: Suite) {
-	const tests = flattenTests(suite)
+export type Ran = Awaited<ReturnType<typeof run>>
+
+export async function run(tree: Tests) {
+	const tests = flattenTests(tree)
 	const selectedTests = tests.only.size > 0
 		? tests.only
 		: tests.regular
@@ -50,7 +53,7 @@ export async function run(suite: Suite) {
 
 							(reason instanceof Error) ?
 								`${reason.name}: ${reason.message}` :
-								"test threw unknown type"
+								display(reason)
 						))
 					})
 			})

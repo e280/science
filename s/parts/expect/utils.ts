@@ -51,7 +51,7 @@ function trunc(s: string, max = 16) {
 		: s
 }
 
-function print(x: any) {
+export function display(x: any) {
 	if (typeof x === "undefined")
 		return "undefined"
 	else if (x === null)
@@ -74,13 +74,13 @@ function print(x: any) {
 		return "unknown"
 }
 
-function prints(p: any[]) {
-	return p.map(print).join(", ")
+function displays(p: any[]) {
+	return p.map(display).join(", ")
 }
 
 function expectmessage(not: boolean, key: string, a: any, b: any[]) {
 	return not
-		? `expect(${print(a)}).not.${key}(${prints(b)})`
-		: `expect(${print(a)}).${key}(${prints(b)})`
+		? `expect(${display(a)}).not.${key}(${displays(b)})`
+		: `expect(${display(a)}).${key}(${displays(b)})`
 }
 

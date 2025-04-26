@@ -12,19 +12,15 @@
 	],
 	"scripts": {
 		"build": "tsc",
-		"start": "http-server x",
+		"build-watch": "tsc -w",
 		"test": "node x/example.test.js",
-		"test-watch": "chokidar 'x/**/*.js' -c 'npm test'"
+		"test-watch": "node --watch x/example.test.js"
 	},
 	"dependencies": {
 		"@benev/argv": "^0.3.10"
 	},
 	"devDependencies": {
 		"@types/node": "^22.15.2",
-		"chokidar": "^4.0.3",
-		"chokidar-cli": "^3.0.0",
-		"http-server": "^14.1.1",
-		"npm-run-all": "^4.1.5",
 		"typescript": "^5.7.3"
 	},
 	"keywords": [

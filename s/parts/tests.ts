@@ -1,10 +1,10 @@
 
-import {meta, Suite} from "./types.js"
+import {meta, Tests} from "./types.js"
 
-export function tests<S extends Suite>(suite: S): S {
+export function tests<Ts extends Tests>(suite: Ts): Ts {
 	return suite
 }
 
-tests.only = <S extends Suite>(suite: S): S => (suite[meta] = {kind: "only"}, suite)
-tests.skip = <S extends Suite>(suite: S): S => (suite[meta] = {kind: "skip"}, suite)
+tests.only = <Ts extends Tests>(suite: Ts): Ts => (suite[meta] = {kind: "only"}, suite)
+tests.skip = <Ts extends Tests>(suite: Ts): Ts => (suite[meta] = {kind: "skip"}, suite)
 

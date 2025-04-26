@@ -16,8 +16,8 @@ export type Vial = {
 	path: string[]
 }
 
-export type Suite = {
-	[key: string]: Test | Suite
+export type Tests = {
+	[key: string]: Test | Tests
 	[meta]?: Meta
 }
 
@@ -25,21 +25,5 @@ export type TestReport = {
 	vial: Vial
 	time: number
 	fail?: string
-}
-
-export type ColorFn = (s: string) => string
-
-export type Theme = {
-	success: ColorFn
-	successTime: ColorFn
-	errorPath: ColorFn
-	errorGrammar: ColorFn
-	errorLabel: ColorFn
-	errorMessage: ColorFn
-	errorTime: ColorFn
-}
-
-export type ScienceOptions = {
-	theme: Theme
 }
 
