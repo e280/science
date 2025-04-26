@@ -1,4 +1,12 @@
 
+export function plural(x: number, one = "", many = "s") {
+	return (x === 1) ? one : many
+}
+
+export function ms(t: number) {
+	return `${t.toFixed(0)} ms`
+}
+
 export function chunkify<I>(array: I[], size: number): I[][] {
 	const chunks: I[][] = []
 	let currentChunk: I[] = []

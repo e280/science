@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-import {expect} from "./expect.js"
-import {science, test, tests} from "./sketch.js"
+import {test} from "./parts/test.js"
+import {tests} from "./parts/tests.js"
+import {science} from "./parts/science.js"
+import {expect} from "./parts/expect/expect.js"
 
 const steeze = {
 	dollars: 350,
