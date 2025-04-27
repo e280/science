@@ -4,6 +4,7 @@ export * from "./execution/execute.js"
 export * from "./expectation/errors.js"
 export * from "./expectation/expect.js"
 
+export * from "./presentation/coloring.js"
 export * from "./presentation/deliver.js"
 export * from "./presentation/glyphs.js"
 export * from "./presentation/summarize.js"

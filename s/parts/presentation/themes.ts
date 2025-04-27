@@ -4,7 +4,8 @@ import {color} from "./coloring.js"
 export type ColorFn = (s: string) => string
 
 export type Theme = {
-	special: ColorFn
+	skip: ColorFn
+	only: ColorFn
 
 	successSuite: ColorFn
 	successGrammar: ColorFn
@@ -26,26 +27,9 @@ export function asTheme<T extends Theme>(theme: T) {
 }
 
 export const themes = {
-	standard: asTheme({
-		special: color.yellow,
-
-		successSuite: color.brightGreen,
-		successPath: color.green,
-		successGrammar: s => color.dim(color.green(s)),
-		successLabel: s => color.bold(color.brightGreen(s)),
-		successTime: s => color.dim(color.green(s)),
-
-		errorSuite: color.brightRed,
-		errorDidnt: color.red,
-		errorPath: color.red,
-		errorLabel: s => color.bold(color.brightRed(s)),
-		errorGrammar: s => color.dim(color.red(s)),
-		errorMessage: color.red,
-		errorTime: s => color.dim(color.red(s)),
-	}),
-
-	blank: asTheme({
-		special: color.none,
+	plain: asTheme({
+		skip: color.none,
+		only: color.none,
 
 		successSuite: color.none,
 		successPath: color.none,
@@ -60,6 +44,44 @@ export const themes = {
 		errorGrammar: color.none,
 		errorMessage: color.none,
 		errorTime: color.none,
+	}),
+
+	standard: asTheme({
+		skip: color.yellow,
+		only: color.yellow,
+
+		successSuite: color.brightGreen,
+		successPath: color.green,
+		successGrammar: s => color.dim(color.green(s)),
+		successLabel: s => color.bold(color.brightGreen(s)),
+		successTime: s => color.dim(color.green(s)),
+
+		errorSuite: color.brightRed,
+		errorDidnt: color.red,
+		errorPath: color.red,
+		errorLabel: s => color.bold(color.yellow(s)),
+		errorGrammar: s => color.dim(color.red(s)),
+		errorMessage: color.brightRed,
+		errorTime: s => color.dim(color.red(s)),
+	}),
+
+	seaside: asTheme({
+		skip: color.yellow,
+		only: color.yellow,
+
+		successSuite: color.brightBlue,
+		successPath: color.blue,
+		successGrammar: s => color.dim(color.blue(s)),
+		successLabel: s => color.bold(color.brightBlue(s)),
+		successTime: s => color.dim(color.blue(s)),
+
+		errorSuite: color.brightRed,
+		errorDidnt: color.red,
+		errorPath: color.red,
+		errorLabel: s => color.bold(color.brightRed(s)),
+		errorGrammar: s => color.dim(color.red(s)),
+		errorMessage: color.brightRed,
+		errorTime: s => color.dim(color.red(s)),
 	}),
 }
 

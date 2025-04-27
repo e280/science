@@ -9,6 +9,10 @@ export type Options = {
 	verbose: boolean
 }
 
+export function options(o: Partial<Options>) {
+	return o
+}
+
 export class Stdout {
 	constructor(public line: string) {}
 }

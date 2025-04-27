@@ -6,6 +6,9 @@ export type GlyphSet = {
 	testSuccess: string
 	suiteFail: string
 	suiteSuccess: string
+	timeSeparator: string
+	pathSeparator: string
+	messageSeparator: string
 }
 
 export function asGlyphSet<G extends GlyphSet>(g: G) {
@@ -13,22 +16,40 @@ export function asGlyphSet<G extends GlyphSet>(g: G) {
 }
 
 export const glyphs = {
-	emoji: asGlyphSet({
-		skip: "👻",
-		only: "🚧",
-		testFail: "🚫",
-		testSuccess: "🍏",
-		suiteFail: "❌",
-		suiteSuccess: "✅",
-	}),
-
-	simple: asGlyphSet({
+	plain: asGlyphSet({
 		skip: "[SKIP]",
 		only: "[ONLY]",
 		testFail: "[X]",
-		testSuccess: "[O]",
+		testSuccess: " • ",
 		suiteFail: "[FAIL]",
 		suiteSuccess: "[GOOD]",
+		timeSeparator: " - ",
+		pathSeparator: " > ",
+		messageSeparator: " :: ",
+	}),
+
+	standard: asGlyphSet({
+		skip: "👻",
+		only: "🚧",
+		testFail: "❌",
+		testSuccess: " •",
+		suiteFail: "🟥",
+		suiteSuccess: "✅",
+		timeSeparator: " - ",
+		pathSeparator: " > ",
+		messageSeparator: " :: ",
+	}),
+
+	seaside: asGlyphSet({
+		skip: "👻",
+		only: "🚧",
+		testFail: "❌",
+		testSuccess: " •",
+		suiteFail: "🟥",
+		suiteSuccess: "💙",
+		timeSeparator: " - ",
+		pathSeparator: " > ",
+		messageSeparator: " :: ",
 	}),
 }
 
