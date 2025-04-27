@@ -120,8 +120,13 @@ await Science.run(myTestSuite, {
 ```ts
 expect(2 + 2).is(4)
 
-// custom fail message
+// custom fail note
 expect(2 + 2, "universe is broken").is(2)
+
+// custom fail note alt syntax
+expect(2 + 2)
+  .note("universe is broken")
+  .is(2)
 
 expect(2 + 2).isnt(4)
 expect(2 + 2).gt(3)
