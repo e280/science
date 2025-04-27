@@ -112,6 +112,9 @@ await Science.run({
 ```ts
 await Science.run(myTestSuite, {
 
+  // enable verbose mode
+  verbose: true,
+
 	// disable coloring
 	theme: Science.themes.blank,
 
