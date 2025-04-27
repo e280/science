@@ -46,10 +46,17 @@
 
 ### Happy tests
 ![](https://i.imgur.com/pRqFpAU.png)
+```ts
+// example test case
+"addition works": test(async() => {
+  expect(2 + 2).is(4)
+}),
+```
 
 ### Skipping tests
 ![](https://i.imgur.com/nbMGDcx.png)
 ```ts
+  //            skip this test
   //                   👇
 "addition works": test.skip(async() => {
   expect(2 + 2).is(4)
@@ -59,6 +66,7 @@
 ### Only running some tests
 ![](https://i.imgur.com/EhULDb2.png)
 ```ts
+  //            only run this test
   //                   👇
 "addition works": test.only(async() => {
   expect(2 + 2).is(4)
