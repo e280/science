@@ -1,14 +1,14 @@
 
 import {themes} from "./themes.js"
 import {glyphs} from "./glyphs.js"
-import {TestReport, Vial} from "../types.js"
+import {Tube, Experiment} from "../types.js"
 import {ms, plural} from "../execution/utils.js"
 import {hasArg, isColorSupported} from "./supports.js"
 import {ExecutionReport} from "../execution/execute.js"
 import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
 
 export function summarize(
-		report: ExecutionReport,
+		ex: ExecutionReport,
 		options: Partial<Options> = {},
 	): Summary {
 
@@ -20,53 +20,66 @@ export function summarize(
 			: themes.plain
 	)
 
-	const allCount = report.tests.all.size
-	const happyCount = report.successes.length
-	const angryCount = report.failures.length
-	const skipCount = report.tests.skip.size
-	const onlyCount = report.tests.only.size
+	const allCount = ex.tests.length
+	const happyCount = ex.successes.length
+	const angryCount = ex.failures.length
+	const skipCount = ex.tests.filter(t => t.skip).length
+	const onlyCount = ex.tests.filter(t => t.only).length
 
 	const outputs: Output[] = []
 	const log = (line: string) => outputs.push(new Stdout(line))
 	const err = (line: string) => outputs.push(new Stderr(line))
 	let loggedCaseCount = 0
 
-	function getSpecialNote(vial: Vial) {
-		const isSkip = report.tests.skip.has(vial)
-		const isOnly = report.tests.only.has(vial)
+	function getSpecialNote(tube: Tube) {
 		return (
-			isOnly ?
+			tube.only ?
 				` ${g.only} (only)` :
-			isSkip ?
+			tube.skip ?
 				` ${g.skip} (skip)` :
 				""
 		)
 	}
 
-	function errFailedTest({vial, time, fail}: TestReport) {
+	function errFailedTest(tube: Tube, experiment: Experiment) {
 		loggedCaseCount += 1
-		const path = vial.path
-		const label = t.errorLabel(vial.label)
+		const path = tube.path
+		const label = t.errorLabel(tube.label)
 		const breadcrumb = [...path.map(t.errorPath), label].join(t.errorGrammar(g.pathSeparator))
-		const message = t.errorMessage(fail ?? "unknown fail")
-		const timely = t.errorTime(`${g.timeSeparator}${ms(time)}`)
+		const message = t.errorMessage(experiment.fail ?? "unknown fail")
+		const timely = t.errorTime(`${g.timeSeparator}${ms(experiment.time)}`)
 		const x = t.errorSuite(g.testFail)
-		err(`${x}${getSpecialNote(vial)} ${breadcrumb}${t.errorGrammar(g.messageSeparator)}${message}${timely}`)
+		err(`${x}${getSpecialNote(tube)} ${breadcrumb}${t.errorGrammar(g.messageSeparator)}${message}${timely}`)
 	}
 
-	function logHappyTest({vial, time}: TestReport) {
+	function logHappyTest(tube: Tube, experiment: Experiment) {
 		loggedCaseCount += 1
-		const path = vial.path
-		const label = t.successLabel(vial.label)
+		const path = tube.path
+		const label = t.successLabel(tube.label)
 		const breadcrumb = [...path.map(t.successPath), label].join(t.successGrammar(g.pathSeparator))
-		const timely = t.successTime(`${g.timeSeparator}${ms(time)}`)
+		const timely = t.successTime(`${g.timeSeparator}${ms(experiment.time)}`)
 		const x = t.successSuite(g.testSuccess)
-		log(`${x}${getSpecialNote(vial)} ${breadcrumb}${timely}`)
+		log(`${x}${getSpecialNote(tube)} ${breadcrumb}${timely}`)
 	}
 
-	for (const test of report.reports) {
-		if (test.fail) errFailedTest(test)
-		else if (verbose) logHappyTest(test)
+	function logSadTest(tube: Tube) {
+		loggedCaseCount += 1
+		const path = tube.path
+		const label = t.successLabel(tube.label)
+		const breadcrumb = [...path.map(t.successPath), label].join(t.successGrammar(g.pathSeparator))
+		const x = t.successSuite(g.testSuccess)
+		log(`${x}${getSpecialNote(tube)} ${breadcrumb}`)
+	}
+
+	for (const tube of ex.tests) {
+		const experiment = ex.experiments.get(tube)
+		if (experiment) {
+			if (experiment.fail) errFailedTest(tube, experiment)
+			else if (verbose) logHappyTest(tube, experiment)
+		}
+		else if (verbose) {
+			logSadTest(tube)
+		}
 	}
 
 	if (loggedCaseCount > 0)
@@ -83,19 +96,19 @@ export function summarize(
 	if (angryCount === 0) {
 		const x = t.successSuite(g.suiteSuccess)
 		const happy = t.successLabel(`${happyCount} happy tests`)
-		const time = t.successTime(`- ${ms(report.time)}`)
+		const time = t.successTime(`- ${ms(ex.time)}`)
 		log(`${x} ${happy} ${time}`)
 	}
 	else {
 		const x = t.errorSuite(g.suiteFail)
 		const failures = t.errorSuite(`${angryCount} failure${plural(angryCount)}`)
 		const didnt = t.errorDidnt(`(${happyCount} succeeded)`)
-		const time = t.errorTime(`- ${ms(report.time)}`)
+		const time = t.errorTime(`- ${ms(ex.time)}`)
 		err(`${x} ${failures} ${didnt} ${time}`)
 	}
 
 	return {
-		report,
+		report: ex,
 		outputs,
 		code: angryCount > 0 ? 1 : 0,
 	}

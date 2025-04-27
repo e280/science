@@ -3,25 +3,32 @@ import {chunkify} from "./utils.js"
 import {Fail} from "../expectation/errors.js"
 import {display} from "../expectation/utils.js"
 import {flattenTests} from "./flatten-tests.js"
-import {Suite, Vial, TestReport} from "../types.js"
-import { workloadSize } from "./workload-size.js"
+import {workloadSize} from "./workload-size.js"
+import {Suite, Tube, Experiment} from "../types.js"
 
 export type ExecutionReport = Awaited<ReturnType<typeof execute>>
 
 export async function execute(tree: Suite) {
 	const tests = flattenTests(tree)
-	const selectedTests = tests.only.size > 0
-		? tests.only
-		: tests.regular
+	const nonSkipped = tests.filter(tube => !tube.skip)
+	const only = nonSkipped.filter(tube => tube.only)
 
-	async function executeVial(vial: Vial): Promise<TestReport> {
+	const selectedTests = only.length > 0
+		? only
+		: nonSkipped
+
+	type Execution = {
+		tube: Tube
+		experiment: Experiment
+	}
+
+	async function executeVial(tube: Tube): Promise<Execution> {
 		const start = performance.now()
-		return vial.fn()
+		return tube.fn()
 
 			.then(result => {
 				const time = performance.now() - start
-				return {
-					vial,
+				return {tube, experiment: {
 					time,
 					fail: (
 						(result === undefined) ?
@@ -34,13 +41,12 @@ export async function execute(tree: Suite) {
 							result :
 							"test returned unknown type"
 					),
-				}
+				}}
 			})
 
 			.catch(reason => {
 				const time = performance.now() - start
-				return {
-					vial,
+				return {tube, experiment: {
 					time,
 					fail: (
 						(typeof reason === "string") ?
@@ -53,21 +59,23 @@ export async function execute(tree: Suite) {
 							`${reason.name}: ${reason.message}` :
 							display(reason)
 					),
-				}
+				}}
 			})
 	}
 
 	const totalStart = performance.now()
-	const reports: TestReport[] = []
+	const experiments = new Map<Tube, Experiment>()
 
 	for (const workload of chunkify([...selectedTests], workloadSize)) {
-		const workloadReport = await Promise.all(workload.map(executeVial))
-		reports.push(...workloadReport)
+		const group = await Promise.all(workload.map(executeVial))
+		for (const {tube, experiment} of group)
+			experiments.set(tube, experiment)
 	}
 
 	const time = performance.now() - totalStart
-	const failures = reports.filter(r => r.fail)
-	const successes = reports.filter(r => !r.fail)
-	return {tests, selectedTests, reports, failures, successes, time}
+	const failures = [...experiments.values()].filter(r => r.fail)
+	const successes = [...experiments.values()].filter(r => !r.fail)
+
+	return {tests, selectedTests, experiments, failures, successes, time}
 }
 

@@ -1,42 +1,25 @@
 
-import {meta, Suite, Test, Vial} from "../types.js"
+import {meta, Suite, Test, Tube} from "../types.js"
 
 export function flattenTests(tree: Suite) {
-	const all = new Set<Vial>()
-	const regular = new Set<Vial>()
-	const only = new Set<Vial>()
-	const skip = new Set<Vial>()
+	const tubes: Tube[] = []
 
 	function recurse(s: Suite, path: string[]) {
 		for (const [label, value] of Object.entries(s)) {
 			if (typeof value === "function") {
 				const fn = value as Test
-				const kind = fn[meta]?.kind ?? s[meta]?.kind
-				const vial: Vial = {label, fn, path}
-
-				all.add(vial)
-
-				switch (kind) {
-					case "only":
-						only.add(vial)
-						break
-					case "skip":
-						skip.add(vial)
-						break
-					case undefined:
-						regular.add(vial)
-						break
-				}
+				fn[meta] ??= s[meta] // fn inherits meta from parent suite
+				tubes.push(new Tube(label, fn, path))
 			}
 			else {
 				const childSuite = value as Suite
-				childSuite[meta] ??= s[meta]
+				childSuite[meta] ??= s[meta] // suite inherits meta from parent suite
 				recurse(value as Suite, [...path, label])
 			}
 		}
 	}
 
 	recurse(tree, [])
-	return {all, regular, only, skip}
+	return tubes
 }
 

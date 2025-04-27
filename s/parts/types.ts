@@ -10,20 +10,31 @@ export type Test = {
 	[meta]?: Meta
 }
 
-export type Vial = {
-	label: string
-	fn: Test
-	path: string[]
+export class Experiment {
+	constructor(
+		public time: number,
+		public fail?: string,
+	) {}
+}
+
+export class Tube {
+	constructor(
+		public label: string,
+		public fn: Test,
+		public path: string[],
+	) {}
+
+	get skip() {
+		return this.fn[meta]?.kind === "skip"
+	}
+
+	get only() {
+		return this.fn[meta]?.kind === "only"
+	}
 }
 
 export type Suite = {
 	[key: string]: Test | Suite
 	[meta]?: Meta
-}
-
-export type TestReport = {
-	vial: Vial
-	time: number
-	fail?: string
 }
 
