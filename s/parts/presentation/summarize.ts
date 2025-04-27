@@ -1,6 +1,7 @@
 
 import {themes} from "./themes.js"
 import {glyphs} from "./glyphs.js"
+import {isColorSupported} from "./supports.js"
 import {ms, plural} from "../execution/utils.js"
 import {ExecutionReport} from "../execution/execute.js"
 import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
@@ -10,8 +11,12 @@ export function summarize(
 		options: Partial<Options> = {},
 	): Summary {
 
-	const t = options.theme ?? themes.standard
 	const g = options.glyphs ?? glyphs.emoji
+	const t = options.theme ?? (
+		isColorSupported()
+			? themes.blank
+			: themes.standard
+	)
 
 	const allCount = report.tests.all.size
 	const happyCount = report.successes.length
