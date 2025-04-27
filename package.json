@@ -16,9 +16,6 @@
 		"test": "node x/example.test.js",
 		"test-watch": "node --watch x/example.test.js"
 	},
-	"dependencies": {
-		"@benev/argv": "^0.3.10"
-	},
 	"devDependencies": {
 		"@types/node": "^22.15.2",
 		"typescript": "^5.7.3"

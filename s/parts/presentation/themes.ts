@@ -1,5 +1,5 @@
 
-import {color} from "@benev/argv"
+import {color} from "./coloring.js"
 
 export type ColorFn = (s: string) => string
 
