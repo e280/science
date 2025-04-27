@@ -112,14 +112,11 @@ await Science.run({
 ```ts
 await Science.run(myTestSuite, {
 
-  // enable verbose mode
+  // enable verbose output
   verbose: true,
 
-	// disable coloring
-	theme: Science.themes.blank,
-
-	// disable emojis
-	glyphs: Science.glyphs.simple,
+	// disable colors
+	theme: Science.themes.plain,
 })
 ```
 

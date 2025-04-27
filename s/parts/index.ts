@@ -6,7 +6,6 @@ export * from "./expectation/expect.js"
 
 export * from "./presentation/coloring.js"
 export * from "./presentation/deliver.js"
-export * from "./presentation/glyphs.js"
 export * from "./presentation/summarize.js"
 export * from "./presentation/supports.js"
 export * from "./presentation/themes.js"

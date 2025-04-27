@@ -1,9 +1,18 @@
 
 import {color} from "./coloring.js"
 
+export type Theme = {
+	colors: ThemeColors
+	icons: ThemeIcons
+}
+
+export function asTheme(theme: Theme) {
+	return theme
+}
+
 export type ColorFn = (s: string) => string
 
-export type Theme = {
+export type ThemeColors = {
 	skip: ColorFn
 	only: ColorFn
 	neutral: ColorFn
@@ -24,72 +33,123 @@ export type Theme = {
 	errorTime: ColorFn
 }
 
-export function asTheme<T extends Theme>(theme: T) {
-	return theme
+export type ThemeIcons = {
+	skip: string
+	only: string
+	testFail: string
+	testSuccess: string
+	testNeutral: string
+	suiteFail: string
+	suiteSuccess: string
+	timeSeparator: string
+	pathSeparator: string
+	messageSeparator: string
 }
 
 export const themes = {
 	plain: asTheme({
-		skip: color.none,
-		only: color.none,
-		neutral: color.none,
-		neutralLabel: color.none,
+		colors: {
+			skip: color.none,
+			only: color.none,
+			neutral: color.none,
+			neutralLabel: color.none,
 
-		successSuite: color.none,
-		successPath: color.none,
-		successGrammar: color.none,
-		successLabel: color.none,
-		successTime: color.none,
+			successSuite: color.none,
+			successPath: color.none,
+			successGrammar: color.none,
+			successLabel: color.none,
+			successTime: color.none,
 
-		errorSuite: color.none,
-		errorDidnt: color.none,
-		errorPath: color.none,
-		errorLabel: color.none,
-		errorGrammar: color.none,
-		errorMessage: color.none,
-		errorTime: color.none,
+			errorSuite: color.none,
+			errorDidnt: color.none,
+			errorPath: color.none,
+			errorLabel: color.none,
+			errorGrammar: color.none,
+			errorMessage: color.none,
+			errorTime: color.none,
+		},
+		icons: {
+			skip: "⏭",
+			only: "✳",
+			testFail: "[X]",
+			testSuccess: " • ",
+			testNeutral: " • ",
+			suiteFail: "[FAIL]",
+			suiteSuccess: "[GOOD]",
+			timeSeparator: " - ",
+			pathSeparator: " > ",
+			messageSeparator: " :: ",
+		},
 	}),
 
 	redgreen: asTheme({
-		skip: color.yellow,
-		only: color.yellow,
-		neutral: s => color.dim(color.white(s)),
-		neutralLabel: color.white,
+		colors: {
+			skip: color.yellow,
+			only: color.yellow,
+			neutral: s => color.dim(color.white(s)),
+			neutralLabel: color.white,
 
-		successSuite: color.brightGreen,
-		successPath: color.green,
-		successGrammar: s => color.dim(color.green(s)),
-		successLabel: s => color.bold(color.brightGreen(s)),
-		successTime: s => color.dim(color.green(s)),
+			successSuite: color.brightGreen,
+			successPath: color.green,
+			successGrammar: s => color.dim(color.green(s)),
+			successLabel: s => color.bold(color.brightGreen(s)),
+			successTime: s => color.dim(color.green(s)),
 
-		errorSuite: color.brightRed,
-		errorDidnt: color.red,
-		errorPath: color.red,
-		errorLabel: s => color.bold(color.yellow(s)),
-		errorGrammar: s => color.dim(color.red(s)),
-		errorMessage: color.brightRed,
-		errorTime: s => color.dim(color.red(s)),
+			errorSuite: color.brightRed,
+			errorDidnt: color.red,
+			errorPath: color.red,
+			errorLabel: s => color.bold(color.yellow(s)),
+			errorGrammar: s => color.dim(color.red(s)),
+			errorMessage: color.brightRed,
+			errorTime: s => color.dim(color.red(s)),
+		},
+		icons: {
+			skip: "👻",
+			only: "🚧",
+			testFail: "❌",
+			testSuccess: " •",
+			testNeutral: " •",
+			suiteFail: "🟥",
+			suiteSuccess: "✅",
+			timeSeparator: " - ",
+			pathSeparator: " > ",
+			messageSeparator: " :: ",
+		},
 	}),
 
 	seaside: asTheme({
-		skip: color.yellow,
-		only: color.yellow,
-		neutral: s => color.dim(color.white(s)),
-		neutralLabel: color.white,
+		colors: {
+			skip: color.yellow,
+			only: color.yellow,
+			neutral: s => color.dim(color.white(s)),
+			neutralLabel: color.white,
 
-		successSuite: color.brightBlue,
-		successPath: color.blue,
-		successGrammar: s => color.dim(color.blue(s)),
-		successLabel: s => color.bold(color.brightBlue(s)),
-		successTime: s => color.dim(color.blue(s)),
+			successSuite: color.brightBlue,
+			successPath: color.blue,
+			successGrammar: s => color.dim(color.blue(s)),
+			successLabel: s => color.bold(color.brightBlue(s)),
+			successTime: s => color.dim(color.blue(s)),
 
-		errorSuite: color.brightRed,
-		errorDidnt: color.red,
-		errorPath: color.red,
-		errorLabel: s => color.bold(color.brightRed(s)),
-		errorGrammar: s => color.dim(color.red(s)),
-		errorMessage: color.brightRed,
-		errorTime: s => color.dim(color.red(s)),
+			errorSuite: color.brightRed,
+			errorDidnt: color.red,
+			errorPath: color.red,
+			errorLabel: s => color.bold(color.brightRed(s)),
+			errorGrammar: s => color.dim(color.red(s)),
+			errorMessage: color.brightRed,
+			errorTime: s => color.dim(color.red(s)),
+		},
+		icons: {
+			skip: "👻",
+			only: "🚧",
+			testFail: "❌",
+			testSuccess: " •",
+			testNeutral: " •",
+			suiteFail: "🟥",
+			suiteSuccess: "💙",
+			timeSeparator: " - ",
+			pathSeparator: " > ",
+			messageSeparator: " :: ",
+		},
 	}),
 }
 

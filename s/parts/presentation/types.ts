@@ -1,11 +1,9 @@
 
 import {Theme} from "./themes.js"
-import {GlyphSet} from "./glyphs.js"
 import {ExecutionReport} from "../execution/execute.js"
 
 export type Options = {
 	theme: Theme
-	glyphs: GlyphSet
 	verbose: boolean
 }
 
