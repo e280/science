@@ -19,6 +19,7 @@ await Science.run({
 		}),
 
 		"array tests": test(async() => {
+			await new Promise(resolve => setTimeout(resolve, 100))
 			expect([1, 2, 3].length).not.is(2)
 		}),
 	}),

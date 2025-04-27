@@ -22,42 +22,40 @@ export async function execute(tree: Suite) {
 	const totalStart = performance.now()
 
 	for (const workload of chunkify([...selectedTests], 64)) {
-		await Promise.all(
-			workload.map(vial => {
-				const start = performance.now()
-				vial.fn()
+		await Promise.all(workload.map(async vial => {
+			const start = performance.now()
+			return vial.fn()
 
-					.then(result => {
-						const time = performance.now() - start
-						handleReport(vial, time, (
-							(result === undefined) ?
-								undefined :
+				.then(result => {
+					const time = performance.now() - start
+					handleReport(vial, time, (
+						(result === undefined) ?
+							undefined :
 
-							(result === false) ?
-								"test returned false" :
+						(result === false) ?
+							"test returned false" :
 
-							(typeof result === "string") ?
-								result :
-								"test returned unknown type"
-						))
-					})
+						(typeof result === "string") ?
+							result :
+							"test returned unknown type"
+					))
+				})
 
-					.catch(reason => {
-						const time = performance.now() - start
-						handleReport(vial, time, (
-							(typeof reason === "string") ?
-								reason :
+				.catch(reason => {
+					const time = performance.now() - start
+					handleReport(vial, time, (
+						(typeof reason === "string") ?
+							reason :
 
-							(reason instanceof Fail) ?
-								reason.message :
+						(reason instanceof Fail) ?
+							reason.message :
 
-							(reason instanceof Error) ?
-								`${reason.name}: ${reason.message}` :
-								display(reason)
-						))
-					})
-			})
-		)
+						(reason instanceof Error) ?
+							`${reason.name}: ${reason.message}` :
+							display(reason)
+					))
+				})
+		}))
 	}
 
 	const time = performance.now() - totalStart
