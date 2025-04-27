@@ -1,13 +1,13 @@
 
 import {chunkify} from "./utils.js"
-import {Fail} from "../expect/errors.js"
-import {display} from "../expect/utils.js"
+import {Fail} from "../expectation/errors.js"
+import {display} from "../expectation/utils.js"
 import {flattenTests} from "./flatten-tests.js"
-import {Tests, Vial, TestReport} from "../types.js"
+import {Suite, Vial, TestReport} from "../types.js"
 
-export type Ran = Awaited<ReturnType<typeof run>>
+export type ExecutionReport = Awaited<ReturnType<typeof execute>>
 
-export async function run(tree: Tests) {
+export async function execute(tree: Suite) {
 	const tests = flattenTests(tree)
 	const selectedTests = tests.only.size > 0
 		? tests.only

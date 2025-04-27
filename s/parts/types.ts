@@ -16,8 +16,8 @@ export type Vial = {
 	path: string[]
 }
 
-export type Tests = {
-	[key: string]: Test | Tests
+export type Suite = {
+	[key: string]: Test | Suite
 	[meta]?: Meta
 }
 

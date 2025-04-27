@@ -1,29 +1,29 @@
 
 import {themes} from "./themes.js"
 import {glyphs} from "./glyphs.js"
-import {Ran} from "../runner/run.js"
-import {ms, plural} from "../runner/utils.js"
-import {FullReport, Options, Output, Stderr, Stdout} from "./types.js"
+import {ms, plural} from "../execution/utils.js"
+import {ExecutionReport} from "../execution/execute.js"
+import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
 
-export function report(
-		ran: Ran,
+export function summarize(
+		report: ExecutionReport,
 		options: Partial<Options> = {},
-	): FullReport {
+	): Summary {
 
 	const t = options.theme ?? themes.standard
-	const g = options.glyphs ?? glyphs.simple
+	const g = options.glyphs ?? glyphs.emoji
 
-	const allCount = ran.tests.all.size
-	const happyCount = ran.successes.length
-	const angryCount = ran.failures.length
-	const skipCount = ran.tests.skip.size
-	const onlyCount = ran.tests.only.size
+	const allCount = report.tests.all.size
+	const happyCount = report.successes.length
+	const angryCount = report.failures.length
+	const skipCount = report.tests.skip.size
+	const onlyCount = report.tests.only.size
 
 	const outputs: Output[] = []
 	const log = (line: string) => outputs.push(new Stdout(line))
 	const err = (line: string) => outputs.push(new Stderr(line))
 
-	for (const failure of ran.failures) {
+	for (const failure of report.failures) {
 		const path = failure.vial.path
 		const label = t.errorLabel(failure.vial.label)
 		const breadcrumb = [...path.map(t.errorPath), label].join(t.errorGrammar(" -> "))
@@ -47,19 +47,19 @@ export function report(
 	if (angryCount === 0) {
 		const x = t.success(g.suiteSuccess)
 		const happy = t.successLabel(`${happyCount} happy tests`)
-		const time = t.successTime(`- ${ms(ran.time)}`)
+		const time = t.successTime(`- ${ms(report.time)}`)
 		log(`${x} ${happy} ${time}`)
 	}
 	else {
 		const x = t.errorSuite(g.suiteFail)
 		const failures = t.errorLabel(`${angryCount} failure${plural(angryCount)}`)
 		const didnt = t.errorDidnt(`(${happyCount} succeeded)`)
-		const time = t.errorTime(`- ${ms(ran.time)}`)
+		const time = t.errorTime(`- ${ms(report.time)}`)
 		err(`${x} ${failures} ${didnt} ${time}`)
 	}
 
 	return {
-		ran,
+		report,
 		outputs,
 		code: angryCount > 0 ? 1 : 0,
 	}

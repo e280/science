@@ -1,42 +1,28 @@
-#!/usr/bin/env node
-
-import {test} from "./parts/test.js"
-import {tests} from "./parts/tests.js"
-import {expect} from "./parts/expect/expect.js"
 
 import Science from "./index.js"
+import {test} from "./parts/test.js"
+import {suite} from "./parts/tests.js"
+import {expect} from "./parts/expectation/expect.js"
 
-const steeze = {
-
-	// // GOOD
-	dollars: 1_000_001,
-	seaworthyVessels: 2,
-	bitches: 2,
-
-	// // FAIL
-	// dollars: 350,
-	// seaworthyVessels: 0,
-	// bitches: 0,
-}
-
-await Science.suite({
-	"money stuff": tests({
-		"not a brokie": test(async() => {
-			expect(steeze.dollars).not.lt(1_000)
-		}),
-
-		"millionaire": test(async() => {
-			expect(steeze.dollars, "poor!").gte(1_000_000)
-		}),
+await Science.run({
+	"addition works": test(async() => {
+		expect(1 + 1).is(2)
 	}),
 
-	"boats": test(async() => {
-		expect(steeze.seaworthyVessels).gt(1)
+	"subtraction works": test(async() => {
+		expect(2 - 1).gt(0)
 	}),
 
-	"hoes": test(async() => {
-		if (steeze.bitches < 2)
-			throw "not enough bitches"
+	"more tests": suite({
+		"string tests": test(async() => {
+			expect("hello" + " world").is("hello world")
+		}),
+
+		"array tests": test(async() => {
+			const items = [1, 2, 3]
+			items.pop()
+			expect(items.length).not.is(3)
+		}),
 	}),
 })
 

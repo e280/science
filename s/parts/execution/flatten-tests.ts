@@ -1,13 +1,13 @@
 
-import {meta, Tests, Test, Vial} from "../types.js"
+import {meta, Suite, Test, Vial} from "../types.js"
 
-export function flattenTests(tree: Tests) {
+export function flattenTests(tree: Suite) {
 	const all = new Set<Vial>()
 	const regular = new Set<Vial>()
 	const only = new Set<Vial>()
 	const skip = new Set<Vial>()
 
-	function recurse(s: Tests, path: string[]) {
+	function recurse(s: Suite, path: string[]) {
 		for (const [label, value] of Object.entries(s)) {
 			if (typeof value === "function") {
 				const fn = value as Test
@@ -29,9 +29,9 @@ export function flattenTests(tree: Tests) {
 				}
 			}
 			else {
-				const childSuite = value as Tests
+				const childSuite = value as Suite
 				childSuite[meta] ??= s[meta]
-				recurse(value as Tests, [...path, label])
+				recurse(value as Suite, [...path, label])
 			}
 		}
 	}
