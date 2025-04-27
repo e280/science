@@ -1,5 +1,5 @@
 {
-	"name": "@benev/science",
+	"name": "@e280/science",
 	"version": "0.0.0-0",
 	"description": "a new kind of testing framework",
 	"license": "MIT",
@@ -30,10 +30,10 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/benevolent-games/science.git"
+		"url": "git+https://github.com/e280/science.git"
 	},
 	"bugs": {
-		"url": "https://github.com/benevolent-games/science/issues"
+		"url": "https://github.com/e280/science/issues"
 	},
-	"homepage": "https://github.com/benevolent-games/science#readme"
+	"homepage": "https://github.com/e280/science#readme"
 }

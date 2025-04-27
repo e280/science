@@ -1,5 +1,5 @@
 
-# @benev/science changelog
+# @e280/science changelog
 
 - 🟥 *harmful -- breaking change*
 - 🔶 *maybe harmful -- deprecation, or possible breaking change*
