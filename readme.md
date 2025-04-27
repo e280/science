@@ -3,9 +3,13 @@
 
 > *an [e280.org](https://e280.org/) project*
 
+- deadass simple, no cli actually
+- no funky instrumentation horseshit
+- customizable, modular, built goodly
+
 <br/>
 
-## Typescript/javascript testing framework
+## Typescript/javascript testing library
 
 - install science
   ```sh
@@ -21,113 +25,105 @@
     }),
   })
   ```
-
-### Happy tests
-![](https://i.imgur.com/pRqFpAU.png)
 - run your tests in node
   ```sh
   node tests.test.js
   ```
-- setup a watch routine for your tests
+- watch mode (run-on-save!)
   ```sh
   node --watch tests.test.js
   ```
+- stick it in your package.json
+  ```json
+  "scripts": {
+    "test": "node tests.test.js",
+    "test-watch": "node --watch tests.test.js"
+  },
+  ```
+
+### Happy tests
+![](https://i.imgur.com/pRqFpAU.png)
 
 ### Skipping tests
 ![](https://i.imgur.com/nbMGDcx.png)
-- ```ts
-    //                    👇
-  "addition works": test.skip(async() => {
-    expect(2 + 2).is(4)
-  }),
-  ```
+```ts
+  //                   👇
+"addition works": test.skip(async() => {
+  expect(2 + 2).is(4)
+}),
+```
 
 ### Only running some tests
 ![](https://i.imgur.com/EhULDb2.png)
-- ```ts
-    //                    👇
-  "addition works": test.only(async() => {
-    expect(2 + 2).is(4)
-  }),
-  ```
+```ts
+  //                   👇
+"addition works": test.only(async() => {
+  expect(2 + 2).is(4)
+}),
+```
 
 ### Failing tests
 ![](https://i.imgur.com/uDjRSXX.png)
-- ```ts
-  "addition works": test(async() => {
+```ts
+"addition works": test(async() => {
 
-    // fail by expectation
-    expect(2 + 999).is(4)
+  // fail by expectation
+  expect(2 + 999).is(4)
 
-    // fail by returning false
-    return false
+  // fail by returning false
+  return false
 
-    // fail by throwing a string or error
-    throw "universe is broken"
-  }),
-  ```
+  // fail by throwing a string or error
+  throw "universe is broken"
+}),
+```
 
 ### Arbitrary nesting of test suites
-- ```ts
-  await Science.run({
-    "nesting": suite({
-      "deeper nesting": suite({
-        "addition works": test(async() => {
-          expect(2 + 2).is(4)
-        }),
+```ts
+await Science.run({
+  "nesting": suite({
+    "deeper nesting": suite({
+      "addition works": test(async() => {
+        expect(2 + 2).is(4)
       }),
     }),
-  })
-  ```
+  }),
+})
+```
+
+### Passing in options
+```ts
+await Science.run(myTestSuite, {
+
+	// disable coloring
+	theme: Science.themes.blank,
+
+	// disable emojis
+	glyphs: Science.glyphs.simple,
+})
+```
 
 <br/>
 
-## Realistic expectations
-- simple expectation
-  ```ts
-  "addition works": test(async() => {
+## The key to happiness is realistic expectations
+```ts
+expect(2 + 2).is(4)
 
-     // "is" to check === equality
-     //          👇
-    expect(2 + 2).is(4)
-  }),
-  ```
-- expectation with a custom message
-  ```ts
-  expect(2 + 2, "universe is broken").is(2)
-  ```
-- greater than, less than
-  ```ts
-  expect(2 + 2).gt(3)
-  expect(2 + 2).lt(5)
-  expect(2 + 2).gte(4)
-  expect(2 + 2).lte(4)
-  ```
-- other handy stuff
-  ```ts
-  expect(2 + 2).isnt(5)
-  ```
-- expecting a function will throw
-  ```ts
-  expect(() => {throw "lol"}).throws()
-  ```
-- expecting an async function will throw
-  ```ts
-  await expect(async() => {throw "lol"}).throwsAsync()
-  ```
+// custom fail message
+expect(2 + 2, "universe is broken").is(2)
 
-### You can use `.not` on all expectations
-- not is
-  ```ts
-  expect(2 + 2).not.is(5)
-  ```
-- not isnt (you're a psycho)
-  ```ts
-  expect(2 + 2).not.isnt(4)
-  ```
-- not throws
-  ```ts
-  expect(() => {throw "lol"}).not.throws()
-  ```
-- i think you get the idea
+expect(2 + 2).isnt(4)
+expect(2 + 2).gt(3)
+expect(2 + 2).lt(5)
+expect(2 + 2).gte(4)
+expect(2 + 2).lte(4)
+
+expect(() => {throw "lol"}).throws()
+await expect(async() => {throw "lol"}).throwsAsync()
+
+// you can ".not" anything
+expect(2 + 2).not.is(5)
+expect(2 + 2).not.isnt(4) // lol
+expect(() => {throw "lol"}).not.throws()
+```
 

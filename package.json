@@ -1,7 +1,7 @@
 {
 	"name": "@e280/science",
 	"version": "0.0.0-0",
-	"description": "a new kind of testing framework",
+	"description": "ts/js testing library",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",
