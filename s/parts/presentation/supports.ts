@@ -37,3 +37,12 @@ export function exit(code: number) {
 		Deno.exit(code)
 }
 
+export function hasArg(arg: string) {
+	if (isNode())
+		return process.argv.slice(1).includes(arg)
+	else if (isDeno())
+		return Deno.args.includes(arg)
+	else
+		return false
+}
+

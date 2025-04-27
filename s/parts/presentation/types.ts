@@ -6,6 +6,7 @@ import {ExecutionReport} from "../execution/execute.js"
 export type Options = {
 	theme: Theme
 	glyphs: GlyphSet
+	verbose: boolean
 }
 
 export class Stdout {

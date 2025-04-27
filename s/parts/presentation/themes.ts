@@ -5,9 +5,13 @@ export type ColorFn = (s: string) => string
 
 export type Theme = {
 	special: ColorFn
-	success: ColorFn
+
+	successSuite: ColorFn
+	successGrammar: ColorFn
+	successPath: ColorFn
 	successLabel: ColorFn
 	successTime: ColorFn
+
 	errorSuite: ColorFn
 	errorDidnt: ColorFn
 	errorPath: ColorFn
@@ -24,9 +28,13 @@ export function asTheme<T extends Theme>(theme: T) {
 export const themes = {
 	standard: asTheme({
 		special: color.yellow,
-		success: color.green,
-		successLabel: color.brightGreen,
+
+		successSuite: color.brightGreen,
+		successPath: color.green,
+		successGrammar: s => color.dim(color.green(s)),
+		successLabel: s => color.bold(color.brightGreen(s)),
 		successTime: s => color.dim(color.green(s)),
+
 		errorSuite: color.brightRed,
 		errorDidnt: color.red,
 		errorPath: color.red,
@@ -38,9 +46,13 @@ export const themes = {
 
 	blank: asTheme({
 		special: color.none,
-		success: color.none,
+
+		successSuite: color.none,
+		successPath: color.none,
+		successGrammar: color.none,
 		successLabel: color.none,
 		successTime: color.none,
+
 		errorSuite: color.none,
 		errorDidnt: color.none,
 		errorPath: color.none,

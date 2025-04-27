@@ -3,6 +3,7 @@ export type GlyphSet = {
 	skip: string
 	only: string
 	testFail: string
+	testSuccess: string
 	suiteFail: string
 	suiteSuccess: string
 }
@@ -16,6 +17,7 @@ export const glyphs = {
 		skip: "👻",
 		only: "🚧",
 		testFail: "🚫",
+		testSuccess: "🍏",
 		suiteFail: "❌",
 		suiteSuccess: "✅",
 	}),
@@ -24,6 +26,7 @@ export const glyphs = {
 		skip: "[SKIP]",
 		only: "[ONLY]",
 		testFail: "[X]",
+		testSuccess: "[O]",
 		suiteFail: "[FAIL]",
 		suiteSuccess: "[GOOD]",
 	}),

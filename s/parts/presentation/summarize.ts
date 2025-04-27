@@ -1,8 +1,9 @@
 
 import {themes} from "./themes.js"
 import {glyphs} from "./glyphs.js"
-import {isColorSupported} from "./supports.js"
+import {TestReport} from "../types.js"
 import {ms, plural} from "../execution/utils.js"
+import {hasArg, isColorSupported} from "./supports.js"
 import {ExecutionReport} from "../execution/execute.js"
 import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
 
@@ -11,11 +12,12 @@ export function summarize(
 		options: Partial<Options> = {},
 	): Summary {
 
+	const verbose = options.verbose ?? (hasArg("--verbose") || hasArg("-v"))
 	const g = options.glyphs ?? glyphs.emoji
 	const t = options.theme ?? (
 		isColorSupported()
-			? themes.blank
-			: themes.standard
+			? themes.standard
+			: themes.blank
 	)
 
 	const allCount = report.tests.all.size
@@ -27,18 +29,35 @@ export function summarize(
 	const outputs: Output[] = []
 	const log = (line: string) => outputs.push(new Stdout(line))
 	const err = (line: string) => outputs.push(new Stderr(line))
+	let loggedCaseCount = 0
 
-	for (const failure of report.failures) {
-		const path = failure.vial.path
-		const label = t.errorLabel(failure.vial.label)
+	function errFailedTest({vial, time, fail}: TestReport) {
+		loggedCaseCount += 1
+		const path = vial.path
+		const label = t.errorLabel(vial.label)
 		const breadcrumb = [...path.map(t.errorPath), label].join(t.errorGrammar(" -> "))
-		const message = t.errorMessage(failure.fail ?? "unknown fail")
-		const time = t.errorTime(`- ${ms(failure.time)}`)
+		const message = t.errorMessage(fail ?? "unknown fail")
+		const timely = t.errorTime(`- ${ms(time)}`)
 		const x = t.errorSuite(g.testFail)
-		err(`${x} ${breadcrumb} ${t.errorGrammar("=>")} ${message} ${time}`)
+		err(`${x} ${breadcrumb} ${t.errorGrammar("=>")} ${message} ${timely}`)
 	}
 
-	if (angryCount > 0)
+	function logHappyTest({vial, time}: TestReport) {
+		loggedCaseCount += 1
+		const path = vial.path
+		const label = t.successLabel(vial.label)
+		const breadcrumb = [...path.map(t.successPath), label].join(t.successGrammar(" -> "))
+		const timely = t.successTime(`- ${ms(time)}`)
+		const x = t.successSuite(g.testSuccess)
+		log(`${x} ${breadcrumb} ${timely}`)
+	}
+
+	for (const test of report.reports) {
+		if (test.fail) errFailedTest(test)
+		else if (verbose) logHappyTest(test)
+	}
+
+	if (loggedCaseCount > 0)
 		log("")
 
 	if (onlyCount) {
@@ -50,7 +69,7 @@ export function summarize(
 	}
 
 	if (angryCount === 0) {
-		const x = t.success(g.suiteSuccess)
+		const x = t.successSuite(g.suiteSuccess)
 		const happy = t.successLabel(`${happyCount} happy tests`)
 		const time = t.successTime(`- ${ms(report.time)}`)
 		log(`${x} ${happy} ${time}`)

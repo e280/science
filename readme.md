@@ -89,6 +89,12 @@
 }),
 ```
 
+### Verbose mode (print all tests)
+![](https://i.imgur.com/n7NKCw0.png)
+```sh
+node tests.test.js --verbose
+```
+
 ### Arbitrary nesting of test suites
 ```ts
 await Science.run({
