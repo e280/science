@@ -30,7 +30,7 @@ export const glyphs = {
 		messageSeparator: " :: ",
 	}),
 
-	standard: asGlyphSet({
+	redgreen: asGlyphSet({
 		skip: "👻",
 		only: "🚧",
 		testFail: "❌",

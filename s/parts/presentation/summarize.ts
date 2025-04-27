@@ -13,10 +13,10 @@ export function summarize(
 	): Summary {
 
 	const verbose = options.verbose ?? (hasArg("--verbose") || hasArg("-v"))
-	const g = options.glyphs ?? glyphs.standard
+	const g = options.glyphs ?? glyphs.seaside
 	const t = options.theme ?? (
 		isColorSupported()
-			? themes.standard
+			? themes.seaside
 			: themes.plain
 	)
 

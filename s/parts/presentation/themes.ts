@@ -50,7 +50,7 @@ export const themes = {
 		errorTime: color.none,
 	}),
 
-	standard: asTheme({
+	redgreen: asTheme({
 		skip: color.yellow,
 		only: color.yellow,
 		neutral: s => color.dim(color.white(s)),
