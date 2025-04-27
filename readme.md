@@ -90,7 +90,7 @@
 ```
 
 ### Verbose mode (print all tests)
-![](https://i.imgur.com/n7NKCw0.png)
+![](https://i.imgur.com/4J1IOJr.png)
 ```sh
 node tests.test.js --verbose
 ```

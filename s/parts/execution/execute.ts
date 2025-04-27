@@ -4,6 +4,7 @@ import {Fail} from "../expectation/errors.js"
 import {display} from "../expectation/utils.js"
 import {flattenTests} from "./flatten-tests.js"
 import {Suite, Vial, TestReport} from "../types.js"
+import { workloadSize } from "./workload-size.js"
 
 export type ExecutionReport = Awaited<ReturnType<typeof execute>>
 
@@ -13,22 +14,16 @@ export async function execute(tree: Suite) {
 		? tests.only
 		: tests.regular
 
-	const reports: TestReport[] = []
+	async function executeVial(vial: Vial): Promise<TestReport> {
+		const start = performance.now()
+		return vial.fn()
 
-	function handleReport(vial: Vial, time: number, fail?: string) {
-		reports.push({vial, time, fail})
-	}
-
-	const totalStart = performance.now()
-
-	for (const workload of chunkify([...selectedTests], 64)) {
-		await Promise.all(workload.map(async vial => {
-			const start = performance.now()
-			return vial.fn()
-
-				.then(result => {
-					const time = performance.now() - start
-					handleReport(vial, time, (
+			.then(result => {
+				const time = performance.now() - start
+				return {
+					vial,
+					time,
+					fail: (
 						(result === undefined) ?
 							undefined :
 
@@ -38,12 +33,16 @@ export async function execute(tree: Suite) {
 						(typeof result === "string") ?
 							result :
 							"test returned unknown type"
-					))
-				})
+					),
+				}
+			})
 
-				.catch(reason => {
-					const time = performance.now() - start
-					handleReport(vial, time, (
+			.catch(reason => {
+				const time = performance.now() - start
+				return {
+					vial,
+					time,
+					fail: (
 						(typeof reason === "string") ?
 							reason :
 
@@ -53,9 +52,17 @@ export async function execute(tree: Suite) {
 						(reason instanceof Error) ?
 							`${reason.name}: ${reason.message}` :
 							display(reason)
-					))
-				})
-		}))
+					),
+				}
+			})
+	}
+
+	const totalStart = performance.now()
+	const reports: TestReport[] = []
+
+	for (const workload of chunkify([...selectedTests], workloadSize)) {
+		const workloadReport = await Promise.all(workload.map(executeVial))
+		reports.push(...workloadReport)
 	}
 
 	const time = performance.now() - totalStart
