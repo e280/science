@@ -2,12 +2,12 @@
 import {themes} from "./themes.js"
 import {Tube, Experiment} from "../types.js"
 import {ms, plural} from "../execution/utils.js"
+import {Execution} from "../execution/execute.js"
 import {hasArg, isColorSupported} from "./supports.js"
-import {ExecutionReport} from "../execution/execute.js"
 import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
 
 export function summarize(
-		ex: ExecutionReport,
+		ex: Execution,
 		options: Partial<Options> = {},
 	): Summary {
 
@@ -21,11 +21,13 @@ export function summarize(
 			: themes.plain.colors
 	}
 
-	const allCount = ex.tests.length
-	const happyCount = ex.successes.length
-	const angryCount = ex.failures.length
-	const skipCount = ex.tests.filter(t => t.skip).length
-	const onlyCount = ex.tests.filter(t => t.only).length
+	const failures = [...ex.experiments.values()].filter(r => r.fail)
+	const successes = [...ex.experiments.values()].filter(r => !r.fail)
+	const allCount = ex.tubes.length
+	const happyCount = successes.length
+	const angryCount = failures.length
+	const skipCount = ex.tubes.filter(t => t.skip).length
+	const onlyCount = ex.tubes.filter(t => t.only).length
 
 	const outputs: Output[] = []
 	const log = (line: string) => outputs.push(new Stdout(line))
@@ -73,7 +75,7 @@ export function summarize(
 		log(`${intro} ${breadcrumb}`)
 	}
 
-	for (const tube of ex.tests) {
+	for (const tube of ex.tubes) {
 		const experiment = ex.experiments.get(tube)
 		if (experiment) {
 			if (experiment.fail) errFailedTest(tube, experiment)

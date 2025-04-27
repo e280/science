@@ -1,6 +1,6 @@
 
 import {Theme} from "./themes.js"
-import {ExecutionReport} from "../execution/execute.js"
+import {Execution} from "../execution/execute.js"
 
 export type Options = {
 	theme: Theme
@@ -24,6 +24,6 @@ export type Output = (Stdout | Stderr)
 export type Summary = {
 	code: 0 | 1
 	outputs: Output[]
-	execution: ExecutionReport
+	execution: Execution
 }
 

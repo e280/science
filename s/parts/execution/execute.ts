@@ -6,14 +6,14 @@ import {flattenTests} from "./flatten-tests.js"
 import {workloadSize} from "./workload-size.js"
 import {Suite, Tube, Experiment} from "../types.js"
 
-export type ExecutionReport = Awaited<ReturnType<typeof execute>>
+export type Execution = Awaited<ReturnType<typeof execute>>
 
 export async function execute(tree: Suite) {
-	const tests = flattenTests(tree)
-	const nonSkipped = tests.filter(tube => !tube.skip)
+	const tubes = flattenTests(tree)
+	const nonSkipped = tubes.filter(tube => !tube.skip)
 	const only = nonSkipped.filter(tube => tube.only)
 
-	const selectedTests = only.length > 0
+	const selectedTubes = only.length > 0
 		? only
 		: nonSkipped
 
@@ -22,7 +22,7 @@ export async function execute(tree: Suite) {
 		experiment: Experiment
 	}
 
-	async function executeVial(tube: Tube): Promise<Execution> {
+	async function executeTube(tube: Tube): Promise<Execution> {
 		const start = performance.now()
 		return tube.fn()
 
@@ -66,16 +66,13 @@ export async function execute(tree: Suite) {
 	const totalStart = performance.now()
 	const experiments = new Map<Tube, Experiment>()
 
-	for (const workload of chunkify([...selectedTests], workloadSize)) {
-		const group = await Promise.all(workload.map(executeVial))
+	for (const workload of chunkify([...selectedTubes], workloadSize)) {
+		const group = await Promise.all(workload.map(executeTube))
 		for (const {tube, experiment} of group)
 			experiments.set(tube, experiment)
 	}
 
 	const time = performance.now() - totalStart
-	const failures = [...experiments.values()].filter(r => r.fail)
-	const successes = [...experiments.values()].filter(r => !r.fail)
-
-	return {tests, selectedTests, experiments, failures, successes, time}
+	return {tubes, selectedTubes, experiments, time}
 }
 
