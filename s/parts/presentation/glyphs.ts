@@ -4,6 +4,7 @@ export type GlyphSet = {
 	only: string
 	testFail: string
 	testSuccess: string
+	testNeutral: string
 	suiteFail: string
 	suiteSuccess: string
 	timeSeparator: string
@@ -17,10 +18,11 @@ export function asGlyphSet<G extends GlyphSet>(g: G) {
 
 export const glyphs = {
 	plain: asGlyphSet({
-		skip: "[SKIP]",
-		only: "[ONLY]",
+		skip: " 󱌃",
+		only: " 󱌃",
 		testFail: "[X]",
 		testSuccess: " • ",
+		testNeutral: " • ",
 		suiteFail: "[FAIL]",
 		suiteSuccess: "[GOOD]",
 		timeSeparator: " - ",
@@ -33,6 +35,7 @@ export const glyphs = {
 		only: "🚧",
 		testFail: "❌",
 		testSuccess: " •",
+		testNeutral: " •",
 		suiteFail: "🟥",
 		suiteSuccess: "✅",
 		timeSeparator: " - ",
@@ -45,6 +48,7 @@ export const glyphs = {
 		only: "🚧",
 		testFail: "❌",
 		testSuccess: " •",
+		testNeutral: " •",
 		suiteFail: "🟥",
 		suiteSuccess: "💙",
 		timeSeparator: " - ",

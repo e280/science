@@ -26,6 +26,6 @@ export type Output = (Stdout | Stderr)
 export type Summary = {
 	code: 0 | 1
 	outputs: Output[]
-	report: ExecutionReport
+	execution: ExecutionReport
 }
 

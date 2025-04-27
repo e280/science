@@ -6,6 +6,8 @@ export type ColorFn = (s: string) => string
 export type Theme = {
 	skip: ColorFn
 	only: ColorFn
+	neutral: ColorFn
+	neutralLabel: ColorFn
 
 	successSuite: ColorFn
 	successGrammar: ColorFn
@@ -30,6 +32,8 @@ export const themes = {
 	plain: asTheme({
 		skip: color.none,
 		only: color.none,
+		neutral: color.none,
+		neutralLabel: color.none,
 
 		successSuite: color.none,
 		successPath: color.none,
@@ -49,6 +53,8 @@ export const themes = {
 	standard: asTheme({
 		skip: color.yellow,
 		only: color.yellow,
+		neutral: s => color.dim(color.white(s)),
+		neutralLabel: color.white,
 
 		successSuite: color.brightGreen,
 		successPath: color.green,
@@ -68,6 +74,8 @@ export const themes = {
 	seaside: asTheme({
 		skip: color.yellow,
 		only: color.yellow,
+		neutral: s => color.dim(color.white(s)),
+		neutralLabel: color.white,
 
 		successSuite: color.brightBlue,
 		successPath: color.blue,

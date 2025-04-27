@@ -31,14 +31,15 @@ export function summarize(
 	const err = (line: string) => outputs.push(new Stderr(line))
 	let loggedCaseCount = 0
 
-	function getSpecialNote(tube: Tube) {
-		return (
-			tube.only ?
-				` ${g.only} (only)` :
-			tube.skip ?
-				` ${g.skip} (skip)` :
-				""
-		)
+	function pickIntro(tube: Tube, experiment: Experiment | undefined) {
+		const suffix = tube.only
+			? t.only(` ${g.only} [ONLY]`)
+			: tube.skip
+				? t.skip(` ${g.skip} [SKIP]`)
+				: ""
+		if (experiment && experiment.fail) return t.errorSuite(g.testFail) + suffix
+		else if (experiment) return t.successSuite(g.testSuccess) + suffix
+		else return t.neutral(g.testNeutral) + suffix
 	}
 
 	function errFailedTest(tube: Tube, experiment: Experiment) {
@@ -48,8 +49,8 @@ export function summarize(
 		const breadcrumb = [...path.map(t.errorPath), label].join(t.errorGrammar(g.pathSeparator))
 		const message = t.errorMessage(experiment.fail ?? "unknown fail")
 		const timely = t.errorTime(`${g.timeSeparator}${ms(experiment.time)}`)
-		const x = t.errorSuite(g.testFail)
-		err(`${x}${getSpecialNote(tube)} ${breadcrumb}${t.errorGrammar(g.messageSeparator)}${message}${timely}`)
+		const intro = pickIntro(tube, experiment)
+		err(`${intro} ${breadcrumb}${t.errorGrammar(g.messageSeparator)}${message}${timely}`)
 	}
 
 	function logHappyTest(tube: Tube, experiment: Experiment) {
@@ -58,17 +59,17 @@ export function summarize(
 		const label = t.successLabel(tube.label)
 		const breadcrumb = [...path.map(t.successPath), label].join(t.successGrammar(g.pathSeparator))
 		const timely = t.successTime(`${g.timeSeparator}${ms(experiment.time)}`)
-		const x = t.successSuite(g.testSuccess)
-		log(`${x}${getSpecialNote(tube)} ${breadcrumb}${timely}`)
+		const intro = pickIntro(tube, experiment)
+		log(`${intro} ${breadcrumb}${timely}`)
 	}
 
-	function logSadTest(tube: Tube) {
+	function logLameTest(tube: Tube) {
 		loggedCaseCount += 1
 		const path = tube.path
-		const label = t.successLabel(tube.label)
-		const breadcrumb = [...path.map(t.successPath), label].join(t.successGrammar(g.pathSeparator))
-		const x = t.successSuite(g.testSuccess)
-		log(`${x}${getSpecialNote(tube)} ${breadcrumb}`)
+		const label = t.neutralLabel(tube.label)
+		const breadcrumb = [...path.map(t.neutral), label].join(t.neutral(g.pathSeparator))
+		const intro = pickIntro(tube, undefined)
+		log(`${intro} ${breadcrumb}`)
 	}
 
 	for (const tube of ex.tests) {
@@ -78,7 +79,7 @@ export function summarize(
 			else if (verbose) logHappyTest(tube, experiment)
 		}
 		else if (verbose) {
-			logSadTest(tube)
+			logLameTest(tube)
 		}
 	}
 
@@ -87,10 +88,10 @@ export function summarize(
 
 	if (onlyCount) {
 		const ignored = allCount - onlyCount
-		log(t.only(`${g.only} only running ${onlyCount} test${plural(onlyCount)} (${ignored} ignored)`))
+		log(t.only(`${g.only} only ran ${onlyCount} test${plural(onlyCount)} (${ignored} ignored)`))
 	}
 	else if (skipCount) {
-		log(t.skip(`${g.skip} skipping ${skipCount} test${plural(onlyCount)}`))
+		log(t.skip(`${g.skip} skipped ${skipCount} test${plural(skipCount)}`))
 	}
 
 	if (angryCount === 0) {
@@ -108,7 +109,7 @@ export function summarize(
 	}
 
 	return {
-		report: ex,
+		execution: ex,
 		outputs,
 		code: angryCount > 0 ? 1 : 0,
 	}
