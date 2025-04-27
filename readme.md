@@ -3,6 +3,7 @@
 
 > *an [e280.org](https://e280.org/) project*
 
+- zero dependencies
 - deadass simple, no cli actually
 - no funky instrumentation horseshit
 - customizable, modular, built goodly
