@@ -1,9 +1,9 @@
 
 ![](https://i.imgur.com/T8obUfO.png)
 
-# 🧪 Science
+# 🧪 @e280/science
 
-> *an [e280.org](https://e280.org/) project*
+> *an https://e280.org/ project*
 
 - zero dependencies
 - deadass simple, no cli actually
@@ -137,4 +137,9 @@ expect(2 + 2).not.is(5)
 expect(2 + 2).not.isnt(4) // lol
 expect(() => {throw "lol"}).not.throws()
 ```
+
+<br/>
+
+## 💖 Made with open source love
+build with us at https://e280.org/ but only if you're cool
 
