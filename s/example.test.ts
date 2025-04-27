@@ -6,22 +6,20 @@ import {expect} from "./parts/expectation/expect.js"
 
 await Science.run({
 	"addition works": test(async() => {
-		expect(1 + 1).is(2)
+		expect(2 + 2).is(4)
 	}),
 
-	"subtraction works": test(async() => {
-		expect(2 - 1).gt(0)
+	"multiplication works": test(async() => {
+		expect(2 * 3).gt(5)
 	}),
 
-	"more tests": suite({
+	"nested suite": suite({
 		"string tests": test(async() => {
 			expect("hello" + " world").is("hello world")
 		}),
 
 		"array tests": test(async() => {
-			const items = [1, 2, 3]
-			items.pop()
-			expect(items.length).not.is(3)
+			expect([1, 2, 3].length).not.is(2)
 		}),
 	}),
 })
