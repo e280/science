@@ -17,7 +17,7 @@
 		"test-watch": "node --watch x/example.test.js --verbose"
 	},
 	"devDependencies": {
-		"@types/node": "^22.15.2",
+		"@types/node": "^22.15.3",
 		"typescript": "^5.7.3"
 	},
 	"keywords": [
