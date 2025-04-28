@@ -1,25 +1,11 @@
 
-import {themes} from "./themes.js"
 import {Tube, Experiment} from "../types.js"
 import {ms, plural} from "../execution/utils.js"
 import {Execution} from "../execution/execute.js"
-import {hasArg, isColorSupported} from "./supports.js"
 import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
 
-export function summarize(
-		ex: Execution,
-		options: Partial<Options> = {},
-	): Summary {
-
-	const verbose = options.verbose ?? (hasArg("--verbose") || hasArg("-v"))
-	const theme = options.theme ?? themes.redgreen
-
-	const {icons, colors} = {
-		...theme,
-		colors: isColorSupported()
-			? theme.colors
-			: themes.plain.colors
-	}
+export function summarize(ex: Execution, options: Options): Summary {
+	const {verbose, theme: {icons, colors}} = options
 
 	const failures = [...ex.experiments.values()].filter(r => r.fail)
 	const successes = [...ex.experiments.values()].filter(r => !r.fail)

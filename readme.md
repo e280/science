@@ -103,16 +103,32 @@ await Science.run({
 ```
 
 ### Passing in options
-```ts
-await Science.run(myTestSuite, {
+- the options object passed in via javascript gets top priority
+  ```ts
+  await Science.run(myTestSuite, {
 
-  // override --verbose argument
-  verbose: true,
+    // print all test cases
+    verbose: true,
 
-	// disable colors and emojis
-	theme: Science.themes.plain,
-})
-```
+	  // disable colors and emojis
+	  theme: Science.themes.plain,
+  })
+  ```
+- the next fallback are cli arguments
+  ```sh
+  node tests.test.js --verbose --theme=seaside
+  ```
+- the next fallback are environment vars
+  ```sh
+  SCIENCE_VERBOSE=1 SCIENCE_THEME=seaside node tests.test.js
+  ```
+  - it's a cool pattern if you leave the theme config to the env variable
+  - that way each developer can set their own SCIENCE_THEME var on their system
+
+### Available themes
+- `redgreen` (default) errors are red, happy tests are green
+- `seaside` better for color blindness, errors are red, happy tests are blue
+- `plain` no colors, no emojis
 
 <br/>
 

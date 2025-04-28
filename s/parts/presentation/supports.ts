@@ -37,13 +37,45 @@ export function exit(code: number) {
 		Deno.exit(code)
 }
 
-export function hasArg(arg: string) {
+export function hasEnv(name: string): boolean {
+	if (isNode())
+		return name in process.env
+	else if (isDeno())
+		return Deno.env.get(name) !== undefined
+	return false
+}
+
+export function hasArg(arg: string): boolean {
 	if (isNode())
 		return process.argv.slice(1).includes(arg)
 	else if (isDeno())
 		return Deno.args.includes(arg)
 	else
 		return false
+}
+
+function findArgValue(name: string, args: string[]) {
+	for (const arg of args) {
+		if (arg.includes("=")) {
+			const [first, ...rest] = arg.split("=")
+			if (first === name)
+				return rest.join("=")
+		}
+	}
+}
+
+export function getArg(name: string) {
+	if (isNode())
+		return findArgValue(name, process.argv.slice(1))
+	else if (isDeno())
+		return findArgValue(name, Deno.args)
+}
+
+export function getEnv(name: string): string | undefined {
+	if (isNode())
+		return process.env[name]
+	else if (isDeno())
+		return Deno.env.get(name)
 }
 
 export async function writeStdout(line: string) {
