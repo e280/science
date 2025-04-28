@@ -110,8 +110,8 @@ await Science.run({
     // print all test cases
     verbose: true,
 
-	  // disable colors and emojis
-	  theme: Science.themes.plain,
+    // disable colors and emojis
+    theme: Science.themes.plain,
   })
   ```
 - the next fallback are cli arguments
