@@ -79,7 +79,7 @@
 "addition works": test(async() => {
 
   // fail by expectation
-  expect(2 + 999).is(4)
+  expect(2 + 2).is(5)
 
   // fail by returning false
   return false
