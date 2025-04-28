@@ -30,22 +30,22 @@
   ```
 - run your tests in node
   ```sh
-  node tests.test.js
+  node tests.test.js --verbose
   ```
 - watch mode (run-on-save!)
   ```sh
-  node --watch tests.test.js
+  node --watch tests.test.js --verbose
   ```
 - stick it in your package.json
   ```json
   "scripts": {
-    "test": "node tests.test.js",
-    "test-watch": "node --watch tests.test.js"
+    "test": "node tests.test.js --verbose",
+    "test-watch": "node --watch tests.test.js --verbose"
   },
   ```
 
 ### Happy tests
-![](https://i.imgur.com/pRqFpAU.png)
+![](https://i.imgur.com/sv056Zz.png)
 ```ts
 // example test case
 "addition works": test(async() => {
@@ -54,7 +54,7 @@
 ```
 
 ### Skipping tests
-![](https://i.imgur.com/nbMGDcx.png)
+![](https://i.imgur.com/NwEZPMt.png)
 ```ts
   //            skip this test
   //                   👇
@@ -64,7 +64,7 @@
 ```
 
 ### Only running some tests
-![](https://i.imgur.com/EhULDb2.png)
+![](https://i.imgur.com/z7g2j8Z.png)
 ```ts
   //            only run this test
   //                   👇
@@ -74,7 +74,7 @@
 ```
 
 ### Failing tests
-![](https://i.imgur.com/uDjRSXX.png)
+![](https://i.imgur.com/WRLXiSW.png)
 ```ts
 "addition works": test(async() => {
 
@@ -87,12 +87,6 @@
   // fail by throwing a string or error
   throw "universe is broken"
 }),
-```
-
-### Verbose mode (print all tests)
-![](https://i.imgur.com/4J1IOJr.png)
-```sh
-node tests.test.js --verbose
 ```
 
 ### Arbitrary nesting of test suites
@@ -112,10 +106,10 @@ await Science.run({
 ```ts
 await Science.run(myTestSuite, {
 
-  // enable verbose output
+  // override --verbose argument
   verbose: true,
 
-	// disable colors
+	// disable colors and emojis
 	theme: Science.themes.plain,
 })
 ```
@@ -129,7 +123,7 @@ expect(2 + 2).is(4)
 // custom fail note
 expect(2 + 2, "universe is broken").is(2)
 
-// custom fail note alt syntax
+// custom fail note (alt syntax)
 expect(2 + 2)
   .note("universe is broken")
   .is(2)

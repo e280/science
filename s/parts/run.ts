@@ -8,6 +8,6 @@ import {summarize} from "./presentation/summarize.js"
 export async function run(tests: Suite, options: Partial<Options> = {}) {
 	const report = await execute(tests)
 	const summary = summarize(report, options)
-	deliver(summary)
+	await deliver(summary)
 }
 

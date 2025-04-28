@@ -46,3 +46,21 @@ export function hasArg(arg: string) {
 		return false
 }
 
+export async function writeStdout(line: string) {
+	if (isNode())
+		process.stdout.write(line + "\n")
+	else if (isDeno())
+		await Deno.stdout.write(new TextEncoder().encode(line + "\n"))
+	else
+		console.log(line)
+}
+
+export async function writeStderr(line: string) {
+	if (isNode())
+		process.stderr.write(line + "\n")
+	else if (isDeno())
+		await Deno.stderr.write(new TextEncoder().encode(line + "\n"))
+	else
+		console.error(line)
+}
+

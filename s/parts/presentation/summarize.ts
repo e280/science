@@ -12,7 +12,7 @@ export function summarize(
 	): Summary {
 
 	const verbose = options.verbose ?? (hasArg("--verbose") || hasArg("-v"))
-	const theme = options.theme ?? themes.seaside
+	const theme = options.theme ?? themes.redgreen
 
 	const {icons, colors} = {
 		...theme,
@@ -40,8 +40,8 @@ export function summarize(
 			: tube.skip
 				? colors.skip(` ${icons.skip} [SKIP]`)
 				: ""
-		if (experiment && experiment.fail) return colors.errorSuite(icons.testFail) + suffix
-		else if (experiment) return colors.successSuite(icons.testSuccess) + suffix
+		if (experiment && experiment.fail) return colors.errorLabel(icons.testFail) + suffix
+		else if (experiment) return colors.successLabel(icons.testSuccess) + suffix
 		else return colors.neutral(icons.testNeutral) + suffix
 	}
 

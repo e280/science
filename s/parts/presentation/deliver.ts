@@ -1,13 +1,13 @@
 
-import {exit} from "./supports.js"
+import {exit, writeStderr, writeStdout} from "./supports.js"
 import {Summary, Stderr} from "./types.js"
 
-export function deliver(summary: Summary) {
+export async function deliver(summary: Summary) {
 	for (const output of summary.outputs) {
 		if (output instanceof Stderr)
-			console.error(output.line)
+			await writeStderr(output.line)
 		else
-			console.log(output.line)
+			await writeStdout(output.line)
 	}
 	exit(summary.code)
 }
