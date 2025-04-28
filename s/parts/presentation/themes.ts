@@ -71,9 +71,9 @@ export const themes = {
 		icons: {
 			skip: "⏭",
 			only: "*",
-			testFail: "❯",
-			testSuccess: "•",
-			testNeutral: "•",
+			testFail: "✘ ",
+			testSuccess: " •",
+			testNeutral: " •",
 			suiteFail: "FAIL!!",
 			suiteSuccess: "good:",
 			timeSeparator: " - ",
