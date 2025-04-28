@@ -101,6 +101,8 @@ await Science.run({
   }),
 })
 ```
+- `suite.skip` works
+- `suite.only` works
 
 ### Passing in options
 - the options object passed in via javascript gets top priority
