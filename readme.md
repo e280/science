@@ -36,6 +36,10 @@
   ```sh
   node --watch tests.test.js --verbose
   ```
+- run the debugger
+  ```sh
+  node inspect tests.test.js
+  ```
 - stick it in your package.json
   ```json
   "scripts": {
