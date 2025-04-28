@@ -14,7 +14,7 @@
 		"build": "tsc",
 		"build-watch": "tsc -w",
 		"test": "node x/example.test.js",
-		"test-watch": "node --watch x/example.test.js"
+		"test-watch": "node --watch x/example.test.js --verbose"
 	},
 	"devDependencies": {
 		"@types/node": "^22.15.2",
