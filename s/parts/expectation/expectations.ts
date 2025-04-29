@@ -1,7 +1,7 @@
 
 import {Fail} from "./errors.js"
 
-export const makeAssertions = (a: any) => ({
+export const makeExpectations = (a: any) => ({
 	ok: () => !!a,
 	nullish: () => a === undefined || a === null,
 	available: () => a !== undefined && a !== null,

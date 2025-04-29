@@ -1,15 +1,15 @@
 
 import {Fail} from "./errors.js"
-import {makeAssertions} from "./assertions.js"
+import {makeExpectations} from "./expectations.js"
 
-export function expectancy<A extends Record<string, (...p: any[]) => (boolean | Promise<boolean>)>>(
+export function expectancy<E extends Record<string, (...p: any[]) => (boolean | Promise<boolean>)>>(
 		not: boolean,
 		a: any,
-		assertions: A,
+		expectations: E,
 		message?: string,
 	) {
 	return Object.fromEntries(
-		Object.entries(assertions).map(([key, fn]) => {
+		Object.entries(expectations).map(([key, fn]) => {
 			const fn1 = fn as (...b: any[]) => (boolean | Promise<boolean>)
 			const fn2 = (...b: any[]) => {
 				const result = fn1(...b)
@@ -26,11 +26,11 @@ export function expectancy<A extends Record<string, (...p: any[]) => (boolean | 
 			}
 			return [key, fn2]
 		})
-	) as A
+	) as E
 }
 
-export const inverseAssertions = (a: any) => {
-	const originals = makeAssertions(a)
+export const inverseExpectations = (a: any) => {
+	const originals = makeExpectations(a)
 	return Object.fromEntries(
 		Object.entries(originals).map(([key, fn]) => {
 			const fn1 = fn as (...p: any[]) => (boolean | Promise<boolean>)
@@ -42,7 +42,7 @@ export const inverseAssertions = (a: any) => {
 			}
 			return [key, fn2]
 		})
-	) as ReturnType<typeof makeAssertions>
+	) as ReturnType<typeof makeExpectations>
 }
 
 function trunc(s: string, max = 16) {
