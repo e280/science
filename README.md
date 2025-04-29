@@ -3,17 +3,15 @@
 
 # 🧪 @e280/science
 
-> *an https://e280.org/ project*
-
-- zero dependencies
+- **minimalist ts/js testing framework**
 - deadass simple, no cli actually
 - no funky instrumentation horseshit
-- customizable, modular, built goodly
+- zero dependencies
+- *an https://e280.org/ project*
 
 <br/>
 
-## Typescript/javascript testing library
-
+## Easy setup
 - install science
   ```sh
   npm install --save-dev @e280/science
@@ -48,17 +46,22 @@
   },
   ```
 
+<br/>
+
+## Learn by example
+
 ### Happy tests
-![](https://i.imgur.com/sv056Zz.png)
 ```ts
 // example test case
 "addition works": test(async() => {
   expect(2 + 2).is(4)
 }),
 ```
+![](https://i.imgur.com/sv056Zz.png)
+
+<br/>
 
 ### Skipping tests
-![](https://i.imgur.com/NwEZPMt.png)
 ```ts
   //            skip this test
   //                   👇
@@ -66,9 +69,11 @@
   expect(2 + 2).is(4)
 }),
 ```
+![](https://i.imgur.com/NwEZPMt.png)
+
+<br/>
 
 ### Only running some tests
-![](https://i.imgur.com/z7g2j8Z.png)
 ```ts
   //            only run this test
   //                   👇
@@ -76,9 +81,11 @@
   expect(2 + 2).is(4)
 }),
 ```
+![](https://i.imgur.com/z7g2j8Z.png)
+
+<br/>
 
 ### Failing tests
-![](https://i.imgur.com/WRLXiSW.png)
 ```ts
 "addition works": test(async() => {
 
@@ -92,6 +99,9 @@
   throw "universe is broken"
 }),
 ```
+![](https://i.imgur.com/WRLXiSW.png)
+
+<br/>
 
 ### Arbitrary nesting of test suites
 ```ts
@@ -107,6 +117,8 @@ await Science.run({
 ```
 - `suite.skip` works
 - `suite.only` works
+
+<br/>
 
 ### Passing in options
 - the options object passed in via javascript gets top priority
@@ -131,11 +143,14 @@ await Science.run({
   - it's a cool pattern if you leave the theme config to the env variable
   - that way each developer can set their own SCIENCE_THEME var on their system
 
+<br/>
+
 ### Available themes
 - `redgreen` (default) errors are red, happy tests are green
 - `seaside` better for color blindness, errors are red, happy tests are blue
 - `plain` no colors, no emojis
 
+<br/>
 <br/>
 
 ## The key to happiness is realistic expectations
