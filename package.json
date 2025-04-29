@@ -13,6 +13,7 @@
 	"scripts": {
 		"build": "tsc",
 		"build-watch": "tsc -w",
+		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +",
 		"test": "node x/example.test.js --verbose",
 		"test-watch": "node --watch x/example.test.js --verbose"
 	},
