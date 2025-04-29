@@ -9,6 +9,11 @@
 
 ## v0.0
 
+### v0.0.1
+- 🍏 add `expect(x).ok()`
+- 🍏 add `expect(x).nullish()`
+- 🍏 add `expect(x).available()`
+
 ### v0.0.0
 - 🍏 initial version
 
