@@ -139,6 +139,9 @@ await Science.run({
 <br/>
 
 ## The key to happiness is realistic expectations
+
+see all the expectations in [expectations.ts](./s/parts/expectation/expectations.ts)
+
 ```ts
 expect(2 + 2).is(4)
 
