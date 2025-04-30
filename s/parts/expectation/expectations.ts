@@ -12,7 +12,7 @@ export const makeExpectations = (a: any) => ({
 	lt: (b: any) => a < b,
 	lte: (b: any) => a <= b,
 
-	throws: () => {
+	throws: (ErrorClass?: new(...a: any[]) => any) => {
 		try {
 			if (typeof a !== "function")
 				throw new Fail(".throws() requires a function")
@@ -20,11 +20,13 @@ export const makeExpectations = (a: any) => ({
 			return false
 		}
 		catch (error) {
+			if (ErrorClass && !(error instanceof ErrorClass))
+				return false
 			return true
 		}
 	},
 
-	throwsAsync: async() => {
+	throwsAsync: async(ErrorClass?: new(...a: any[]) => any) => {
 		try {
 			if (typeof a !== "function")
 				throw new Fail(".throwsAsync() requires an async function")
@@ -35,6 +37,8 @@ export const makeExpectations = (a: any) => ({
 			return false
 		}
 		catch (error) {
+			if (ErrorClass && !(error instanceof ErrorClass))
+				return false
 			return true
 		}
 	},
