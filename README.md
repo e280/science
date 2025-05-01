@@ -28,11 +28,11 @@
   ```
 - run your tests in node
   ```sh
-  node tests.test.js --verbose
+  node tests.test.js
   ```
 - watch mode (run-on-save!)
   ```sh
-  node --watch tests.test.js --verbose
+  node --watch tests.test.js
   ```
 - run the debugger
   ```sh
@@ -41,8 +41,8 @@
 - stick it in your package.json
   ```json
   "scripts": {
-    "test": "node tests.test.js --verbose",
-    "test-watch": "node --watch tests.test.js --verbose"
+    "test": "node tests.test.js",
+    "test-watch": "node --watch tests.test.js"
   },
   ```
 
@@ -136,12 +136,13 @@ await Science.run({
   ```sh
   node tests.test.js --verbose --theme=seaside
   ```
-- the next fallback are environment vars
+- ***(best practice)*** the next fallback are environment vars
   ```sh
   SCIENCE_VERBOSE=1 SCIENCE_THEME=seaside node tests.test.js
   ```
-  - it's a cool pattern if you leave the theme config to the env variable
-  - that way each developer can set their own SCIENCE_THEME var on their system
+  - using environment variables is preferable to hard-coding anything
+  - this allows developers to choose their own preference
+  - they can simply run `export SCIENCE_VERBOSE=1` or `export SCIENCE_THEME=seaside` in their terminal before starting a science watch routine
 
 <br/>
 
