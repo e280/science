@@ -15,10 +15,12 @@
 		"build-watch": "tsc -w",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +",
 		"test": "node x/example.test.js --verbose",
-		"test-watch": "node --watch x/example.test.js --verbose"
+		"test-watch": "node --watch x/example.test.js --verbose",
+		"start": "run-p build-watch test-watch"
 	},
 	"devDependencies": {
 		"@types/node": "^22.15.3",
+		"npm-run-all": "^4.1.5",
 		"typescript": "^5.7.3"
 	},
 	"keywords": [
