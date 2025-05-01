@@ -34,6 +34,9 @@ export async function execute(tree: Suite) {
 						(result === undefined) ?
 							undefined :
 
+						(result === true) ?
+							undefined :
+
 						(result === false) ?
 							"test returned false" :
 
