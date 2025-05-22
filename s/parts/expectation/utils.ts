@@ -47,7 +47,7 @@ export const inverseExpectations = (a: any) => {
 
 function trunc(s: string, max = 16) {
 	return s.length > max
-		? `${s.slice(max)}...`
+		? `${s.slice(0, max)}..`
 		: s
 }
 
