@@ -11,6 +11,8 @@ export * from "./presentation/supports.js"
 export * from "./presentation/themes.js"
 export * from "./presentation/types.js"
 
+export * from "./spycraft/spy.js"
+
 export * from "./run.js"
 export * from "./test.js"
 export * from "./tests.js"
