@@ -9,6 +9,10 @@
 
 ## v0.0
 
+### v0.0.5
+- 🍏 add `spy(fn)` for making spy functions that track calls and returns and such
+- 🍏 fix expect error message value truncations
+
 ### v0.0.1
 - 🍏 add `expect(x).ok()`
 - 🍏 add `expect(x).nullish()`
