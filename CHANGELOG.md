@@ -10,6 +10,7 @@
 
 ### v0.0.6
 - 🍏 update dev dependencies
+- 🍏 add formal package exports
 
 ### v0.0.5
 - 🍏 add `spy(fn)` for making spy functions that track calls and returns and such
