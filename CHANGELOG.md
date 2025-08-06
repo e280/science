@@ -1,13 +1,15 @@
 
 # @e280/science changelog
-
-- 🟥 *harmful -- breaking change*
-- 🔶 *maybe harmful -- deprecation, or possible breaking change*
-- 🍏 *harmless -- addition, fix, or enhancement*
+- 🟥 breaking change
+- 🔶 deprecation or possible breaking change
+- 🍏 harmless addition, fix, or enhancement
 
 <br/>
 
 ## v0.0
+
+### v0.0.6
+- 🍏 update dev dependencies
 
 ### v0.0.5
 - 🍏 add `spy(fn)` for making spy functions that track calls and returns and such
