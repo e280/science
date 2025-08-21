@@ -8,6 +8,9 @@
 
 ## v0.0
 
+### v0.0.7
+- 🍏 update dependencies
+
 ### v0.0.6
 - 🍏 update dev dependencies
 - 🍏 add formal package exports
