@@ -26,7 +26,7 @@ export const makeExpectations = (a: any) => ({
 		}
 	},
 
-	throwsAsync: async(ErrorClass?: new(...a: any[]) => any) => {
+	throwsAsync: async(ErrorClass?: new(...params: any[]) => any) => {
 		try {
 			if (typeof a !== "function")
 				throw new Fail(".throwsAsync() requires an async function")
