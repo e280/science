@@ -159,28 +159,33 @@ await Science.run({
 see all the expectations in [expectations.ts](./s/parts/expectation/expectations.ts)
 
 ```ts
-expect(2 + 2).is(4)
+const x = 2 + 2
+
+expect(x).is(4)
 
 // custom fail note
-expect(2 + 2, "universe is broken").is(2)
+expect(x, "universe is broken").is(2)
 
 // custom fail note (alt syntax)
-expect(2 + 2)
+expect(x)
   .note("universe is broken")
   .is(2)
 
-expect(2 + 2).isnt(4)
-expect(2 + 2).gt(3)
-expect(2 + 2).lt(5)
-expect(2 + 2).gte(4)
-expect(2 + 2).lte(4)
+expect(x).isnt(4)
+expect(x).gt(3)
+expect(x).lt(5)
+expect(x).gte(4)
+expect(x).lte(4)
+
+expect(x).happy() // not undefined or null
+expect(x).sad() // undefined or null
 
 expect(() => {throw "lol"}).throws()
 await expect(async() => {throw "lol"}).throwsAsync()
 
 // you can ".not" anything
-expect(2 + 2).not.is(5)
-expect(2 + 2).not.isnt(4) // lol
+expect(x).not.is(5)
+expect(x).not.isnt(4) // lol
 expect(() => {throw "lol"}).not.throws()
 ```
 

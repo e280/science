@@ -3,8 +3,10 @@ import {Fail} from "./errors.js"
 
 export const makeExpectations = (a: any) => ({
 	ok: () => !!a,
-	nullish: () => a === undefined || a === null,
 	available: () => a !== undefined && a !== null,
+	nullish: () => a === undefined || a === null,
+	happy: () => a !== undefined && a !== null,
+	sad: () => a === undefined || a === null,
 	is: (b: any) => a === b,
 	isnt: (b: any) => a !== b,
 	gt: (b: any) => a > b,

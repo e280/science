@@ -8,6 +8,10 @@
 
 ## v0.1
 
+### v0.1.1
+- 🍏 add `expect(x).happy()` alias for "available"
+- 🍏 add `expect(x).sad()` alias for "nullish"
+
 ### v0.1.0
 - 🍏 moving to version range that allows non-breaking patches
 
