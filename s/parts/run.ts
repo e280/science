@@ -1,7 +1,6 @@
 
-import {Suite} from "./types.js"
+import {Options, Suite} from "./types.js"
 import {execute} from "./execution/execute.js"
-import {Options} from "./presentation/types.js"
 import {themes} from "./presentation/themes.js"
 import {deliver} from "./presentation/deliver.js"
 import {summarize} from "./presentation/summarize.js"

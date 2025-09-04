@@ -1,8 +1,8 @@
 
-import {Tube, Experiment} from "../types.js"
 import {ms, plural} from "../execution/utils.js"
 import {Execution} from "../execution/execute.js"
-import {Summary, Options, Output, Stderr, Stdout} from "./types.js"
+import {Tube, Experiment, Options} from "../types.js"
+import {Summary, Output, Stderr, Stdout} from "./types.js"
 
 export function summarize(ex: Execution, options: Options): Summary {
 	const {verbose, theme: {icons, colors}} = options
