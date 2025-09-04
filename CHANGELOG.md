@@ -4,6 +4,8 @@
 - 🔶 deprecation or possible breaking change
 - 🍏 harmless addition, fix, or enhancement
 
+
+
 <br/>
 
 ## v0.1
@@ -22,6 +24,10 @@
 
 ### v0.1.0
 - 🍏 moving to version range that allows non-breaking patches
+
+
+
+<br/>
 
 ## v0.0
 
