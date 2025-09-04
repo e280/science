@@ -36,8 +36,13 @@ export async function run(tests: Suite, options: Partial<Options> = {}) {
 			: themes.plain.colors
 	}
 
+	// execute tests
 	const report = await execute(tests)
+
+	// produce a summary
 	const summary = summarize(report, {verbose, theme: theme2})
+
+	// output to stdout/stderr, set exit code
 	await deliver(summary)
 }
 

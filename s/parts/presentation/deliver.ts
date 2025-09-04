@@ -1,6 +1,6 @@
 
-import {exit, writeStderr, writeStdout} from "./supports.js"
 import {Summary, Stderr} from "./types.js"
+import {setExitCode, writeStderr, writeStdout} from "./supports.js"
 
 export async function deliver(summary: Summary) {
 	for (const output of summary.outputs) {
@@ -9,6 +9,6 @@ export async function deliver(summary: Summary) {
 		else
 			await writeStdout(output.line)
 	}
-	exit(summary.code)
+	setExitCode(summary.code)
 }
 

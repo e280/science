@@ -31,10 +31,13 @@ export function isColorSupported() {
 }
 
 export function exit(code: number) {
-	if (isNode())
-		process.exit(code)
-	else if (isDeno())
-		Deno.exit(code)
+	if (isNode()) process.exit(code)
+	else if (isDeno()) Deno.exit(code)
+}
+
+export function setExitCode(code: number) {
+	if (isNode()) process.exitCode = code
+	else if (isDeno()) Deno.exitCode = code
 }
 
 export function hasEnv(name: string): boolean {
