@@ -11,6 +11,9 @@
 ## v0.1
 
 ### v0.1.5
+- 🍏 rework github actions for npm oidc publishing
+
+### v0.1.5
 - 🍏 improve readme, include instructions for in-browser testing
 - 🍏 update dependencies
 
