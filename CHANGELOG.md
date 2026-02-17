@@ -10,6 +10,9 @@
 
 ## v0.1
 
+### v0.1.7
+- 🍏 tweak github action security with npm env
+
 ### v0.1.6
 - 🍏 rework github actions for npm oidc publishing
 
