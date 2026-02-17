@@ -9,9 +9,11 @@
 - zero dependencies
 - *an https://e280.org/ project*
 
+
+
 <br/>
 
-## Easy setup
+## ⚗️ easy setup
 - install science
   ```sh
   npm install --save-dev @e280/science
@@ -46,11 +48,13 @@
   },
   ```
 
+
+
 <br/>
 
-## Learn by example
+## ⚗️ learn by example
 
-### Happy tests
+### happy tests
 ```ts
 // example test case
 "addition works": test(async() => {
@@ -59,9 +63,11 @@
 ```
 ![](https://i.imgur.com/sv056Zz.png)
 
+
+
 <br/>
 
-### Skipping tests
+### skipping tests
 ```ts
   //            skip this test
   //                   👇
@@ -71,9 +77,11 @@
 ```
 ![](https://i.imgur.com/NwEZPMt.png)
 
+
+
 <br/>
 
-### Only running some tests
+### only running some tests
 ```ts
   //            only run this test
   //                   👇
@@ -83,9 +91,11 @@
 ```
 ![](https://i.imgur.com/z7g2j8Z.png)
 
+
+
 <br/>
 
-### Failing tests
+### failing tests
 ```ts
 "addition works": test(async() => {
 
@@ -101,9 +111,11 @@
 ```
 ![](https://i.imgur.com/WRLXiSW.png)
 
+
+
 <br/>
 
-### Arbitrary nesting of test suites
+### arbitrary nesting of test suites
 ```ts
 await Science.run({
   "nesting": suite({
@@ -118,9 +130,11 @@ await Science.run({
 - `suite.skip` works
 - `suite.only` works
 
+
+
 <br/>
 
-### Passing in options
+### passing in options
 - the options object passed in via javascript gets top priority
   ```ts
   await Science.run(myTestSuite, {
@@ -144,17 +158,20 @@ await Science.run({
   - this allows developers to choose their own preference
   - they can simply run `export SCIENCE_VERBOSE=1` or `export SCIENCE_THEME=seaside` in their terminal before starting a science watch routine
 
+
+
 <br/>
 
-### Available themes
+### available themes
 - `redgreen` (default) errors are red, happy tests are green
 - `seaside` better for color blindness, errors are red, happy tests are blue
 - `plain` no colors, no emojis
 
-<br/>
+
+
 <br/>
 
-## The key to happiness is realistic expectations
+## ⚗️ the key to happiness is realistic expectations
 
 see all the expectations in [expectations.ts](./s/parts/expectation/expectations.ts)
 
@@ -189,8 +206,10 @@ expect(x).not.isnt(4) // lol
 expect(() => {throw "lol"}).not.throws()
 ```
 
+
+
 <br/>
 
-## 💖 Made with open source love
+## 💖 made with open source love
 build with us at https://e280.org/ but only if you're cool
 
