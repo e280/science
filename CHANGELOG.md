@@ -10,6 +10,17 @@
 
 ## v0.1
 
+### v0.1.5
+- 🍏 improve readme, include instructions for in-browser testing
+- 🍏 update dependencies
+
+### v0.1.4
+- 🍏 update dependencies
+- 🔶 remove dom types from tsconfig
+
+### v0.1.3
+- 🍏 update dependencies
+
 ### v0.1.2
 - 🔶 `Science.run` behavior change
   - old behavior: when done, it would explicitly exit the process, with process.exit or Deno.exit
