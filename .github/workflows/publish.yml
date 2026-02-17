@@ -7,6 +7,9 @@ on:
 
 jobs:
   publish:
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@e280/science
     runs-on: ubuntu-latest
     permissions:
       contents: read
