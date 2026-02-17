@@ -1,6 +1,12 @@
 
 ![](https://i.imgur.com/T8obUfO.png)
 
+![](https://i.imgur.com/am5SBsi.png)
+
+
+
+<br/>
+
 # 🧪 @e280/science
 
 - **minimalist ts/js testing framework**
@@ -61,11 +67,6 @@
   expect(2 + 2).is(4)
 }),
 ```
-![](https://i.imgur.com/sv056Zz.png)
-
-
-
-<br/>
 
 ### skipping tests
 ```ts
@@ -75,11 +76,6 @@
   expect(2 + 2).is(4)
 }),
 ```
-![](https://i.imgur.com/NwEZPMt.png)
-
-
-
-<br/>
 
 ### only running some tests
 ```ts
@@ -89,11 +85,6 @@
   expect(2 + 2).is(4)
 }),
 ```
-![](https://i.imgur.com/z7g2j8Z.png)
-
-
-
-<br/>
 
 ### failing tests
 ```ts
@@ -109,11 +100,6 @@
   throw "universe is broken"
 }),
 ```
-![](https://i.imgur.com/WRLXiSW.png)
-
-
-
-<br/>
 
 ### arbitrary nesting of test suites
 ```ts
@@ -129,10 +115,6 @@ await Science.run({
 ```
 - `suite.skip` works
 - `suite.only` works
-
-
-
-<br/>
 
 ### passing in options
 - the options object passed in via javascript gets top priority
@@ -157,10 +139,6 @@ await Science.run({
   - using environment variables is preferable to hard-coding anything
   - this allows developers to choose their own preference
   - they can simply run `export SCIENCE_VERBOSE=1` or `export SCIENCE_THEME=seaside` in their terminal before starting a science watch routine
-
-
-
-<br/>
 
 ### available themes
 - `redgreen` (default) errors are red, happy tests are green
@@ -205,6 +183,31 @@ expect(x).not.is(5)
 expect(x).not.isnt(4) // lol
 expect(() => {throw "lol"}).not.throws()
 ```
+
+
+
+## ⚗️ run your tests in browser
+  - ok, you have to bundle the test script yourself
+  - then you can just load your bundle as a script
+    ```html
+    <script type=module src="tests.test.bundle.min.js"></script>
+    ```
+  - by default, it will emit results to the console by default
+  - but if you want to make fancier output, you can do it yourself like this:
+    ```ts
+    import {execute, summarize} from "@e280/science"
+    import mySuite from "./my-suite.test.js"
+
+    const report = await execute(mySuite)
+    const summary = summarize(report)
+
+    for (const output in summary.output) {
+      if (output instanceof Stderr)
+        console.error(output.line)
+      else
+        console.log(output.line)
+    }
+    ```
 
 
 
