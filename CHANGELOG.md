@@ -10,7 +10,7 @@
 
 ## v0.1
 
-### v0.1.5
+### v0.1.6
 - 🍏 rework github actions for npm oidc publishing
 
 ### v0.1.5
