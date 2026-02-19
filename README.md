@@ -186,6 +186,8 @@ expect(() => {throw "lol"}).not.throws()
 
 
 
+<br/>
+
 ## ⚗️ run your tests in browser
   - ok, you have to bundle the test script yourself
   - then you can just load your bundle as a script
