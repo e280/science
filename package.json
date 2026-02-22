@@ -1,6 +1,6 @@
 {
 	"name": "@e280/science",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": "ts/js testing library",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
