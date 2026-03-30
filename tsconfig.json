@@ -5,6 +5,7 @@
 		"outDir": "x",
 		"target": "es2023",
 		"lib": ["es2023"],
+		"types": ["node"],
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
 		"sourceMap": true,
