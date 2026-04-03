@@ -1,5 +1,6 @@
 
 import {Fail} from "./errors.js"
+import {deepEqual} from "./deep-equal.js"
 
 export const makeExpectations = (a: any) => ({
 	ok: () => !!a,
@@ -13,6 +14,7 @@ export const makeExpectations = (a: any) => ({
 	gte: (b: any) => a >= b,
 	lt: (b: any) => a < b,
 	lte: (b: any) => a <= b,
+	deep: (b: any) => deepEqual(a, b),
 
 	throws: (ErrorClass?: new(...a: any[]) => any) => {
 		try {
