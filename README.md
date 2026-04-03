@@ -8,9 +8,8 @@
 <br/>
 
 # 🧪 @e280/science
-
 - **minimalist ts/js testing framework**
-- deadass simple, no cli actually
+- deadass simple, literally no cli
 - no funky instrumentation horseshit
 - zero dependencies
 - *an https://e280.org/ project*
@@ -26,9 +25,9 @@
   ```
 - create your `tests.test.js`
   ```ts
-  import {Science, suite, test, expect} from "@e280/science"
+  import {science, suite, test, expect} from "@e280/science"
 
-  await Science.run({
+  await science.run({
     "addition works": test(async() => {
       expect(2 + 2).is(4)
     }),
@@ -103,7 +102,7 @@
 
 ### arbitrary nesting of test suites
 ```ts
-await Science.run({
+await science.run({
   "nesting": suite({
     "deeper nesting": suite({
       "addition works": test(async() => {
@@ -119,13 +118,13 @@ await Science.run({
 ### passing in options
 - the options object passed in via javascript gets top priority
   ```ts
-  await Science.run(myTestSuite, {
+  await science.run(myTestSuite, {
 
     // print all test cases
     verbose: true,
 
     // disable colors and emojis
-    theme: Science.themes.plain,
+    theme: science.themes.plain,
   })
   ```
 - the next fallback are cli arguments
@@ -174,6 +173,9 @@ expect(x).lte(4)
 
 expect(x).happy() // not undefined or null
 expect(x).sad() // undefined or null
+
+// deep equals
+expect([1, 2, 3]).deep([1, 2, 3])
 
 expect(() => {throw "lol"}).throws()
 await expect(async() => {throw "lol"}).throwsAsync()

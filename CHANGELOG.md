@@ -10,6 +10,17 @@
 
 ## v0.1
 
+### v0.1.10
+- 🍏 add `assert` fn
+- 🍏 add `expect(a).deep(b)` fn
+- 🍏 export lowercased `science` namespace
+
+### v0.1.9
+- 🍏 updated deps
+
+### v0.1.8
+- 🍏 updated deps
+
 ### v0.1.7
 - 🍏 tweak github action security with npm env
 
