@@ -1,6 +1,7 @@
 
 export * from "./execution/execute.js"
 
+export * from "./expectation/assert.js"
 export * from "./expectation/errors.js"
 export * from "./expectation/expect.js"
 
