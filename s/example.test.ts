@@ -1,10 +1,10 @@
 
-import Science from "./index.js"
+import science from "./index.js"
 import {test} from "./parts/test.js"
 import {suite} from "./parts/tests.js"
 import {expect} from "./parts/expectation/expect.js"
 
-await Science.run({
+await science.run({
 	"addition works": test(async() => {
 		expect(2 + 2).is(4)
 	}),
