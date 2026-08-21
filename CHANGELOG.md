@@ -10,6 +10,12 @@
 
 ## v0.1
 
+### v0.1.12
+- 🍏 update deps
+
+### v0.1.11
+- 🍏 update deps
+
 ### v0.1.10
 - 🍏 add `assert` fn
 - 🍏 add `expect(a).deep(b)` fn
